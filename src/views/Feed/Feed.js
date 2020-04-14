@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import { productService } from '../../services'
-import CategoryDialog from '../../components/CategoryDialog';
+import { CategoryDialog } from '../../components';
 
 const useStyles = makeStyles({
     container: {
@@ -29,9 +29,10 @@ const Feed = (props) => {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
-    const [productId, setProductId] = useState(0);
+    const [product, setProduct] = useState(0);
 
     useEffect(() => {
+        setLoading(true);
         (async () => {
             const response = await productService.getProducts();
             console.log(response);
@@ -40,8 +41,8 @@ const Feed = (props) => {
         })();    
     }, []);
 
-    const handleShowCategories = async (productId) => {
-        setProductId(productId);
+    const handleShowCategories = async (product) => {
+        setProduct(product);
         setOpenCategoryDialog(true);
     };
 
@@ -78,7 +79,7 @@ const Feed = (props) => {
                                         <TableCell>{product.product_image}</TableCell>
                                         <TableCell>{product.link}</TableCell>
                                         <TableCell>
-                                            <div onClick={() => handleShowCategories(product.product_id)}>
+                                            <div onClick={() => handleShowCategories(product)}>
                                                 <MoreHorizIcon className={classes.dots} />
                                             </div>
                                         </TableCell>
@@ -87,7 +88,7 @@ const Feed = (props) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <CategoryDialog productId={productId} open={openCategoryDialog} onClose={() => setOpenCategoryDialog(false)} />
+                    <CategoryDialog product={product} open={openCategoryDialog} onClose={() => setOpenCategoryDialog(false)} />
                 </Box>
             }
         </Box>

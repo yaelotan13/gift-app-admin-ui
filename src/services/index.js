@@ -1,10 +1,12 @@
-import { getProducts } from './products'
-import { getCategories } from './categories';
+import { getProducts, getProductById } from './products'
+import { getCategories, deleteSubCategories } from './categories';
 
 export const categoriesService = {
-    getCategories
+    getCategories,
+    deleteSubCategories
 };
 
 export const productService = {
     getProducts,
+    getProductById
 };

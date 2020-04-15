@@ -26,11 +26,11 @@ const toggleCategory = (categories, category) => {
 
 const Categories = (props) => {
     const classes = useStyle();
-    const { handleDelete, categories, title, type } = props; 
+    const { handleDelete, categories, title, type, deleteSucceeded } = props; 
     const [open, setOpen] = useState(false);
     const [mainCategoriesSelected, setMainCategoriesSelected] = useState([]);
     const [subCategoriesSelected, setSubCategoriesSelected] = useState([]);
-    
+
     const handleMainCategorySelected = (category) => {
         setMainCategoriesSelected((prevSelected) => {
             return toggleCategory(prevSelected, category);
@@ -43,9 +43,12 @@ const Categories = (props) => {
         })
     };
 
-    const deleteCategories = () => {
-        setOpen(false);
-        type === 'main' ? handleDelete(mainCategoriesSelected) : handleDelete(subCategoriesSelected);
+    const deleteCategories = async () => {
+        console.log('waiting in categories');
+        const value = type === 'main' ? await handleDelete(mainCategoriesSelected) : await handleDelete(subCategoriesSelected);
+        console.log('finished waiting');
+        console.log(value);
+        setOpen(value);
     }
 
     const getString = deleteCategories => `Are you sure you want to delete ${deleteCategories} from categories?`

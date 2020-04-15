@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import {
     Box,
-    CircularProgress,
     Typography,
 } from '@material-ui/core';
 
-import { productService, categoriesService } from '../../services';
 import { ProductPage } from '../../components';
 
 const useStyles = makeStyles({

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import Categories from './Categories';
+import { categoriesService } from '../../../services';
 
 const DEFAULT_MAIN_CATEGORIES = {
     main_category_id : null,
@@ -18,16 +19,23 @@ const useStyles = makeStyles({
 
 const CategoriesInfo = (props) => {
     const classes = useStyles();
-    const { mainCategories, subCategories } = props;
-
-    const deleteMainCategories = (selectedCategories) => {
+    const { mainCategories, subCategories, productId } = props;
+    const [deleteMainCategoriesSucceeded, setDeleteMainCategoriesSucceeded] = useState(false);
+    const [deleteSubCategoriesSucceeded, setDeleteSubCategoriesSucceeded] = useState(false);
+    
+    const deleteMainCategories = async (selectedCategories) => {
         console.log('DELETING MAIN CATEGORIES!');
         console.log(selectedCategories);
+        const status = await categoriesService.deleteMainCategories(productId, selectedCategories);
+        return status === 'ok' ? true : false;
     };
 
-    const deleteSubCategories = (selectedCategories) => {
+    const deleteSubCategories = async (selectedCategories) => {
         console.log('DELETING SUB CATEGORIES!');
         console.log(selectedCategories);
+        setTimeout(() => {
+            setDeleteSubCategoriesSucceeded(true);
+        }, 1000);
     };
 
     return (
@@ -37,12 +45,14 @@ const CategoriesInfo = (props) => {
                 handleDelete={deleteMainCategories}
                 categories={mainCategories}
                 title="Main Categories"
+                deleteSucceeded={deleteMainCategoriesSucceeded}
             />
             <Categories 
                 type="sub"
                 handleDelete={deleteSubCategories}
                 categories={subCategories}
                 title="Sub Categories"
+                deleteSucceeded={deleteSubCategoriesSucceeded}
             />
         </div>
     ); 

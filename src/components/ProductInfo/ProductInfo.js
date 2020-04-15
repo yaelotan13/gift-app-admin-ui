@@ -120,7 +120,7 @@ const ProductPage = (props) => {
                             <BasicProductInfo productInfo={productInfo}/>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <CategoriesInfo mainCategories={mainCategories} subCategories={subCategories} />
+                            <CategoriesInfo mainCategories={mainCategories} subCategories={subCategories} productId={productId} />
                         </TabPanel>
                     </Box>
                 }

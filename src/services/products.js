@@ -6,6 +6,6 @@ export const getProducts = async () => {
 };
 
 export const getProductById = async (id) => {
-    const result = await axios.get(`${productUrl}?id=${id}`);
+    const result = await axios.get(`${productUrl}?product_id=${id}`);
     return result.data[0];
 };

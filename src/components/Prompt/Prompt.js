@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 import { 
     Dialog,
     Button,
-    Typography,
-    Box
+    Box,
+    CircularProgress
 } from '@material-ui/core';
 
 const useStyles = makeStyles({

@@ -1,15 +1,16 @@
-import { url } from '../config/serverUrl';
+import { categoriesUrl } from '../config/serverUrl';
 import axios from 'axios';
 
 export const getCategories = async (productId) => {
-    // return await axios.get(url, {
-    //     params: {
-    //         productId
-    //     }
-    // });
-    return await [
-        {category_id: 1, name: 'sport'}, 
-        {category_id: 2, name: 'lifestyle'}, 
-        {category_id: 3, name: 'outdoors'}
-    ];
+    const result = await axios.get(`${categoriesUrl}?id=${productId}`);
+    return result.data;
+};
+
+export const deleteSubCategories = async (productId, subCategories) => {
+    const result = await axios.delete(`${categoriesUrl}/sub/?id=${productId}`, {
+        parmas: {
+            sub_categories: subCategories
+        }
+    });
+    console.log(result);
 };

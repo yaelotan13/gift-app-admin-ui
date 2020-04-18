@@ -1,41 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import { useDispatch } from 'react-redux';
 
+import useSelector from '../../../hooks/useSelctor';
+import { productCategoriesSelector } from '../../../store/selectors/product';
 import Categories from './Categories';
-import { categoriesService } from '../../../services';
-
-const DEFAULT_MAIN_CATEGORIES = {
-    main_category_id : null,
-    main_category_name : '',
-    main_category_image : '',
-};
+import {  
+    deleteMainCategories as deleteMainCategoriesAction, 
+    deleteSubCategories as deleteSubCategoriesAction
+} from '../../../store/product/actions';
 
 const useStyles = makeStyles({
     root: {
         marginTop: '-3vh',
     },
-});
-
+}); 
 
 const CategoriesInfo = (props) => {
     const classes = useStyles();
-    const { mainCategories, subCategories, productId } = props;
-    const [deleteMainCategoriesSucceeded, setDeleteMainCategoriesSucceeded] = useState(false);
-    const [deleteSubCategoriesSucceeded, setDeleteSubCategoriesSucceeded] = useState(false);
-    
-    const deleteMainCategories = async (selectedCategories) => {
-        console.log('DELETING MAIN CATEGORIES!');
-        console.log(selectedCategories);
-        const status = await categoriesService.deleteMainCategories(productId, selectedCategories);
-        return status === 'ok' ? true : false;
+    const dispatch = useDispatch();
+    const { productId } = props;
+    const categoriesSelector = useSelector(productCategoriesSelector);
+
+    const deleteMainCategories = (selectedCategories) => {
+        dispatch(deleteMainCategoriesAction(productId, selectedCategories));
     };
 
-    const deleteSubCategories = async (selectedCategories) => {
-        console.log('DELETING SUB CATEGORIES!');
-        console.log(selectedCategories);
-        setTimeout(() => {
-            setDeleteSubCategoriesSucceeded(true);
-        }, 1000);
+    const deleteSubCategories = (selectedCategories) => {
+        dispatch(deleteSubCategoriesAction(productId, selectedCategories));
     };
 
     return (
@@ -43,16 +35,14 @@ const CategoriesInfo = (props) => {
             <Categories 
                 type="main"
                 handleDelete={deleteMainCategories}
-                categories={mainCategories}
+                categories={categoriesSelector.mainCategories}
                 title="Main Categories"
-                deleteSucceeded={deleteMainCategoriesSucceeded}
             />
             <Categories 
                 type="sub"
                 handleDelete={deleteSubCategories}
-                categories={subCategories}
+                categories={categoriesSelector.subCategories}
                 title="Sub Categories"
-                deleteSucceeded={deleteSubCategoriesSucceeded}
             />
         </div>
     ); 

@@ -38,12 +38,12 @@ const DEFAULT_PRODUCT_INFO = {
 const BasicProductInfo = (props) => {
     const classes = useStyles();
     const { 
-        product_id : productId, 
-        product_name : productName, 
+        productId, 
+        productName, 
         store, 
         price, 
         link,
-        product_image : productImage 
+        productImage 
     } = props.productInfo ? { ...props.productInfo } : DEFAULT_PRODUCT_INFO;
     
     return (

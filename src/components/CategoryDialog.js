@@ -1,10 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { 
     Dialog, 
     DialogTitle, 
-    CircularProgress, 
     Box, 
     List, 
     ListItem, 
@@ -14,7 +14,10 @@ import {
     Button
 } from '@material-ui/core';
 
-import { categoriesService } from '../services';
+import useSelector from '../hooks/useSelctor';
+import { productCategoriesSelector } from '../store/selectors/product';
+import { fetchProductCategories } from '../store/product/actions';
+import { CenteredSpinner } from '../components/Layout';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -52,22 +55,14 @@ const useStyles = makeStyles({
 
 const CategoryDialog = (props) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const productCategoriesState = useSelector(productCategoriesSelector);
+    console.log(productCategoriesState);
     const { open, onClose, history } = props;
     const { product_id, product_name } = { ...props.product };
-    const [loading, setLoading] = useState(true);
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        if (product_id) {
-            (async () => {
-                setLoading(true);
-                const categories = await categoriesService.getCategories(product_id);
-                console.log(categories);
-                setCategories(categories);
-                setLoading(false);
-            })();
-        }
-    }, [product_id]);
+    const { loading, hasError, mainCategories, subCategories } = {...productCategoriesState};
+    
+    dispatch(fetchProductCategories(product_id));
     
     const handleClick = () => {
         history.push(`/edit/?product_id=${product_id}`);
@@ -78,32 +73,32 @@ const CategoryDialog = (props) => {
             <Box className={classes.wrapper}>
                 {
                     loading ?
-                <CircularProgress />
-                :
-                <Fragment>
-                    <DialogTitle className={classes.center}>{product_name}</DialogTitle>
-                    <List>
-                        <Typography variant="body1" className={classes.mainCategoryHeader}>Main Categories</Typography>
-                        {categories.main.map((category) => (
-                            <ListItem key={category.main_category_id}>
-                                <ListItemAvatar>
-                                    <Avatar></Avatar>
-                                </ListItemAvatar>
-                                {category.main_category_name}
-                            </ListItem>
-                        ))}
-                        <Typography variant="body1" className={classes.subCtegoryHeader}>
-                            Sub Categories
-                        </Typography>
-                        <Box className={classes.subCategoriesContainer}>
-                            {categories.sub.map((category) => (
-                                <ListItem key={category.sub_category_id} className={classes.subCategory}>
-                                    <Typography variant="body2">{category.sub_category_name}</Typography>
+                    <CenteredSpinner />
+                    :
+                    <Fragment>
+                        <DialogTitle className={classes.center}>{product_name}</DialogTitle>
+                        <List>
+                            <Typography variant="body1" className={classes.mainCategoryHeader}>Main Categories</Typography>
+                            {mainCategories.map((category) => (
+                                <ListItem key={category.main_category_id}>
+                                    <ListItemAvatar>
+                                        <Avatar></Avatar>
+                                    </ListItemAvatar>
+                                    {category.main_category_name}
                                 </ListItem>
                             ))}
-                        </Box>
-                    </List>
-                </Fragment>
+                            <Typography variant="body1" className={classes.subCtegoryHeader}>
+                                Sub Categories
+                            </Typography>
+                            <Box className={classes.subCategoriesContainer}>
+                                {subCategories.map((category) => (
+                                    <ListItem key={category.sub_category_id} className={classes.subCategory}>
+                                        <Typography variant="body2">{category.sub_category_name}</Typography>
+                                    </ListItem>
+                                ))}
+                            </Box>
+                        </List>
+                    </Fragment>
                 }
                 <Box className={classes.buttonContainer}>
                     <Button variant="contained" color="primary" onClick={handleClick}>EDIT</Button>

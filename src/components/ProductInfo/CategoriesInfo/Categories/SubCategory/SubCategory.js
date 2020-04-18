@@ -14,6 +14,8 @@ const useStyle = makeStyles({
         marginRight: '1vw',
         padding: '0 16px',
         cursor: 'pointer',
+        width: '15vw',
+        height: '4vh',
         '&:hover': {
             opacity: 0.8
         }

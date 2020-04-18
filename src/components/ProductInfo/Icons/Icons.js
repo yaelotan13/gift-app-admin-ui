@@ -25,7 +25,7 @@ const Icons = (props) => {
     return (
         <Box className={classes.iconsContainer}>
             <DeleteIcon className={classes.icon} onClick={deleteClicked} />
-            <AddIcon className={classes.icon} />
+            <AddIcon className={classes.icon} onClick={addClicked}/>
         </Box>
     );
 };

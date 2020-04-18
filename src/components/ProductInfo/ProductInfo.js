@@ -1,17 +1,20 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import useSelector from '../../hooks/useSelctor';
+import { productSlector } from '../../store/selectors/product';
+import { fetchProductInfo } from '../../store/product/actions';
 import { makeStyles } from '@material-ui/styles';
 import { 
     Tab,
     Tabs,
     Box,
     Typography,
-    CircularProgress,
     Button
 } from '@material-ui/core';
 
-import { categoriesService, productService } from '../../services';
 import BasicProductInfo from './BasicProductInfo';
 import CategoriesInfo from './CategoriesInfo';
+import { CenteredSpinner } from '../Layout';
 
 const useStyles = makeStyles({
     tabsWrapper: {
@@ -70,26 +73,14 @@ function a11yProps(index) {
 
 const ProductPage = (props) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [value, setValue] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [productInfo, setProductInfo] = useState({});
-    const [mainCategories, setMainCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
     const { productId, buttonTitle } = props;
-
+    const productInfo = useSelector(productSlector);
+    
     useEffect(() => {
-        setLoading(true);
-        if (productId) {
-            (async () => {
-                const receivedProductInfo = await productService.getProductById(productId);
-                const receivedCategories = await categoriesService.getCategories(productId);
-                setMainCategories(receivedCategories.main);
-                setSubCategories(receivedCategories.sub);
-                setProductInfo(receivedProductInfo);
-                setLoading(false);
-            })();
-        }
-    }, [productId]);
+        dispatch(fetchProductInfo(productId));
+    }, []);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -110,17 +101,15 @@ const ProductPage = (props) => {
                     <Tab label="Categories" {...a11yProps(1)} />
                 </Tabs>
                 {
-                    loading ?
-                    <Box className={classes.center}>
-                        <CircularProgress />
-                    </Box>
+                    productInfo.loading ?
+                    <CenteredSpinner />
                     :
                     <Box>
                         <TabPanel value={value} index={0}>
-                            <BasicProductInfo productInfo={productInfo}/>
+                            <BasicProductInfo productInfo={productInfo} />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <CategoriesInfo mainCategories={mainCategories} subCategories={subCategories} productId={productId} />
+                            <CategoriesInfo productId={productId} />
                         </TabPanel>
                     </Box>
                 }

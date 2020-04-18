@@ -15,7 +15,7 @@ const useStyle = makeStyles({
 
 const CategoriesHeader = (props) => {
     const classes = useStyle();
-    const { title, deleteDisabled, deleteClicked } = props;
+    const { title, deleteDisabled, deleteClicked, addClicked } = props;
 
     return (
         <Box className={classes.container}>
@@ -23,6 +23,7 @@ const CategoriesHeader = (props) => {
             <Icons 
                 deleteDisabled={deleteDisabled} 
                 deleteClicked={deleteClicked}
+                addClicked={addClicked}
             />
         </Box>
     );

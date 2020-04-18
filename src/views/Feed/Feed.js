@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, CircularProgress, Table, TableBody, TableHead, TableCell, TableContainer, TableRow } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, Typography, Table, TableBody, TableHead, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-import { productService } from '../../services'
 import { CategoryDialog } from '../../components';
+import { CenteredSpinner } from '../../components/Layout';
+import useSelector from '../../hooks/useSelctor';
+import { productsSlector } from '../../store/selectors/products';
+import CategoriesDialog from '../../components/Categories/CategoriesDialog';
 
 const useStyles = makeStyles({
     container: {
@@ -26,20 +29,9 @@ const useStyles = makeStyles({
 
 const Feed = (props) => {
     const classes = useStyles();
-    const [loading, setLoading] = useState(true);
-    const [products, setProducts] = useState([]);
     const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
     const [product, setProduct] = useState(0);
-
-    useEffect(() => {
-        setLoading(true);
-        (async () => {
-            const response = await productService.getProducts();
-            console.log(response);
-            setProducts(response.data);
-            setLoading(false);
-        })();    
-    }, []);
+    const productsState = useSelector(productsSlector);
 
     const handleShowCategories = async (product) => {
         setProduct(product);
@@ -49,10 +41,8 @@ const Feed = (props) => {
     return (
         <Box className={classes.container}>
             {
-                loading ?
-                <Box className={classes.center}>
-                    <CircularProgress /> 
-                </Box>
+                productsState.loading ?
+                <CenteredSpinner />
                 :
                 <Box>
                     <Typography variant="h5">Products</Typography>
@@ -70,7 +60,7 @@ const Feed = (props) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {products.map((product) => (
+                                {productsState.products.map((product) => (
                                     <TableRow key={product.product_id}>
                                         <TableCell>{product.product_id}</TableCell>
                                         <TableCell>{product.product_name}</TableCell>
@@ -88,7 +78,7 @@ const Feed = (props) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <CategoryDialog product={product} open={openCategoryDialog} onClose={() => setOpenCategoryDialog(false)} />
+                    <CategoriesDialog product={product} open={openCategoryDialog} onClose={() => setOpenCategoryDialog(false)} />
                 </Box>
             }
         </Box>

@@ -1,16 +1,33 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Router } from 'react-router-dom';
+import { browserHistory } from './store';
 
-import Feed from './views/Feed';
-import Edit from './views/Edit';
+import { fetchAllProducts } from './store/products/actions';
+import { fetchAllCategories } from './store/categories/actions';
+import { CenteredSpinner } from './components/Layout';
+import useSelector from './hooks/useSelctor';
+import { productsSlector } from './store/selectors/products';
+import Routes from './Routes';
 
 function App() {
+  const dispatch = useDispatch();
+  const productsState = useSelector(productsSlector);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+    dispatch(fetchAllCategories());
+  }, [dispatch]);
+
   return (
-    <Switch>
-      <Route path="/feed" exact component={Feed} />
-      <Route path="/edit" component={Edit} />
-      <Route path="/" component={Feed} />
-    </Switch>
+    <Router history={browserHistory}>
+      {
+        productsState.loading ?
+        <CenteredSpinner />
+        :
+        <Routes />
+      }
+    </Router>
   );
 }
 

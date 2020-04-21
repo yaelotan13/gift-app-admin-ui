@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => createStyles({
         [theme.breakpoints.up('sm')]: {
           width: '12vw',
           '&:focus': {
-            width: '16vw',
+            width: '18vw',
           },
         },
     }
@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => createStyles({
 
 const Search = (props) => {
     const classes = useStyles();
-    const [value, setValue] = useState('');
-
+    const { value, onChange } = props;
+    
     return (
         <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -68,7 +68,7 @@ const Search = (props) => {
               }}
               inputProps={{ 'aria-label': 'search' }}
               value={value}
-              onChange={(event) => setValue(event.target.value)}
+              onChange={(event) => onChange(event.target.value)}
             />
         </div>
     );

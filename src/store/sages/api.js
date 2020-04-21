@@ -168,3 +168,21 @@ export function* AddNewProduct(action) {
         })
     }
 };
+
+export function* DeleteProduct(action) {
+    console.log('in saga DeleteProduct');
+    try {
+        const result = yield call(productsService.deleteProduct, action.payload);
+        console.log(result);
+        yield put({
+            type: productsActionsTypes.DELETE_PRODUCT_SUCCESS,
+            payload: result.data
+        })
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: productsActionsTypes.DELETE_PRODUCT_FAILURE,
+            payload: error
+        })
+    }
+};

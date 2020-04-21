@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
     table: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
     }
 });
 
-const ProductsTable = ({ products, handleEditProduct, handleShowCategories }) => {
+const ProductsTable = ({ products, handleEditProduct, handleShowCategories, handleDeleteProduct }) => {
     const classes = useStyles();
 
     return (
@@ -37,6 +38,7 @@ const ProductsTable = ({ products, handleEditProduct, handleShowCategories }) =>
                     <TableCell>Link</TableCell>
                     <TableCell>Categories</TableCell>
                     <TableCell>Edit</TableCell>
+                    <TableCell>Delete</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -56,6 +58,11 @@ const ProductsTable = ({ products, handleEditProduct, handleShowCategories }) =>
                             <TableCell>
                                 <div onClick={() => handleEditProduct(product.product_id)}>
                                     <EditIcon className={classes.icon} />
+                                </div>
+                            </TableCell>
+                            <TableCell>
+                                <div onClick={() => handleDeleteProduct(product)}>
+                                    <DeleteIcon className={classes.icon} />
                                 </div>
                             </TableCell>
                         </TableRow>

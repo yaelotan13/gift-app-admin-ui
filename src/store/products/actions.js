@@ -7,9 +7,15 @@ export const fetchAllProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-    console.log('in deleteProduct');
     return {
         type: actionTypes.DELETE_PRODUCT,
         payload: productId
+    };
+};
+
+export const seatchProducts = (value) => {
+    return {
+        type: actionTypes.SEARCH_PRODUCTS,
+        payload: value
     };
 };

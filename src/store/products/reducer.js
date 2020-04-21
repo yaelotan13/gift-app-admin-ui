@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     products: [],
+    searchText: '',
     loading: false,
     hasError: null
 };
@@ -17,9 +18,10 @@ const reducer = (state = initialState, action) => {
         }
         case actionTypes.FETCH_ALL_PRODUCTS_SUCCESS: {
             return {
+                ...state,
                 loading: false,
                 hasError: null,
-                products: action.payload
+                products: action.payload,
             }
         }
         case actionTypes.FETCH_ALL_PRODUCTS_FAILURE: {
@@ -49,6 +51,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 hasError: action.payload
+            }
+        }
+        case actionTypes.SEARCH_PRODUCTS: {
+            return {
+                ...state,
+                searchText: action.payload
             }
         }
         default: {

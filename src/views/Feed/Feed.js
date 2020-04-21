@@ -6,13 +6,13 @@ import { useDispatch } from 'react-redux';
 
 import { CenteredSpinner } from '../../components/Layout';
 import useSelector from '../../hooks/useSelctor';
-import { productsSlector } from '../../store/selectors/products';
+import { productsSlector, filteredProductsSelector } from '../../store/selectors/products';
 import CategoriesDialog from '../../components/Categories/CategoriesDialog';
 import { WithMenue } from '../../hocs';
 import ProductTable from './ProductsTable';
 import ProductsHeader from './ProductsHeader';
 import Search from './Search';
-import { fetchAllProducts, deleteProduct as deleteProductAction } from '../../store/products/actions';
+import { fetchAllProducts, deleteProduct as deleteProductAction, seatchProducts } from '../../store/products/actions';
 import { Prompt, ActionButtons } from '../../components/Layout';
 
 const useStyles = makeStyles({
@@ -42,6 +42,7 @@ const Feed = (props) => {
     const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
     const [product, setProduct] = useState(0);
     const productsState = useSelector(productsSlector);
+    const filteredProducts = useSelector(filteredProductsSelector);
 
     const handleShowCategories = (product) => {
         setProduct(product);
@@ -67,10 +68,16 @@ const Feed = (props) => {
         dispatch(deleteProductAction(product.product_id));
     };
 
+    const onSearchInputChanged = (value) => {
+        dispatch(seatchProducts(value));
+    };
+
+    const fetchingFilteredTable = () => filteredProducts.length === 0 && productsState.searchText.length === 0;
+
     return (
         <Box className={classes.container}>
             {
-                productsState.loading ?
+                productsState.loading  || fetchingFilteredTable() ?
                 <CenteredSpinner />
                 :
                 <Box>
@@ -90,9 +97,9 @@ const Feed = (props) => {
                         </Box>
                     </Prompt>
                     <ProductsHeader size={productsState.products.length} onRefresh={handleRefresh} />
-                    <Search />
+                    <Search value={productsState.searchText} onChange={(value) => onSearchInputChanged(value)} />
                     <ProductTable 
-                        products={productsState.products} 
+                        products={filteredProducts} 
                         handleShowCategories={handleShowCategories} 
                         handleEditProduct={handleEditProduct} 
                         handleDeleteProduct={handleDeleteProduct} 

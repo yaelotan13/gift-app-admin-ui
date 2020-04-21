@@ -7,7 +7,7 @@ import {
     updateProductInfo,
     addNewProduct
 } from './product';
-import { getProducts } from './products'
+import { getProducts, deleteProduct } from './products'
 import { getAllCategories } from './categories';
 
 export const categoriesService = {
@@ -16,6 +16,7 @@ export const categoriesService = {
 
 export const productsService = {
     getProducts,
+    deleteProduct
 };
 
 export const productService = {

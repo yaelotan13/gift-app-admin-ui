@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { 
     Dialog, 
@@ -16,7 +15,6 @@ import {
 
 import useSelector from '../hooks/useSelctor';
 import { productCategoriesSelector } from '../store/selectors/product';
-import { fetchProductCategories } from '../store/product/actions';
 import { CenteredSpinner } from '../components/Layout';
 
 const useStyles = makeStyles({
@@ -55,14 +53,10 @@ const useStyles = makeStyles({
 
 const CategoryDialog = (props) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const productCategoriesState = useSelector(productCategoriesSelector);
-    console.log(productCategoriesState);
     const { open, onClose, history } = props;
     const { product_id, product_name } = { ...props.product };
     const { loading, hasError, mainCategories, subCategories } = {...productCategoriesState};
-    
-    dispatch(fetchProductCategories(product_id));
     
     const handleClick = () => {
         history.push(`/edit/?product_id=${product_id}`);

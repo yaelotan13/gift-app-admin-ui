@@ -1,0 +1,32 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/styles';
+import { Box, Typography, IconButton } from '@material-ui/core';
+import CachedIcon from '@material-ui/icons/Cached';
+
+const useStyles = makeStyles({
+    wrapper: {
+        padding: '0 16px',
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    span: {
+        fontSize: 12,
+        color: 'grey'
+    }
+});
+
+const ProductsHeader = (props) => {
+    const classes = useStyles();
+    const { size, onRefresh } = props;
+    
+    return (
+        <Box className={classes.wrapper}>
+            <Typography variant="h5">Products <span className={classes.span}> {size} total</span></Typography>
+            <IconButton onClick={onRefresh}>
+                <CachedIcon />
+            </IconButton>
+        </Box>
+    );
+};
+
+export default ProductsHeader;

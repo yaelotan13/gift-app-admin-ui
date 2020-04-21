@@ -1,0 +1,25 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/styles';
+import { Box } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    center: {
+        height: '80vh',
+        width: '80vw',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+});
+
+const WithCenter = ({ children }) => {
+    const classes = useStyles();
+
+    return (
+        <Box className={classes.center}>
+            {children}
+        </Box>
+    );
+};
+
+export default WithCenter;

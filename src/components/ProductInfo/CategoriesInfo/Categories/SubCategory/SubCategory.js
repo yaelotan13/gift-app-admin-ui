@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import {
     Box,
@@ -11,11 +11,10 @@ const useStyle = makeStyles({
     subCategory: {
         border: `1px solid ${grey[300]}`,
         borderRadius: 20,
-        marginRight: '1vw',
+        marginLeft: '1vw',
+        marginTop: '1vh',
         padding: '0 16px',
         cursor: 'pointer',
-        width: '15vw',
-        height: '4vh',
         '&:hover': {
             opacity: 0.8
         }
@@ -27,7 +26,7 @@ const useStyle = makeStyles({
 
 const SubCategory = (props) => {
     const classes = useStyle();
-    const { title, selected, handleClick } = props;
+    const { title, selected, handleClick, id } = props;
 
     return (
         <Box 

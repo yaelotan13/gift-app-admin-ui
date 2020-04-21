@@ -30,7 +30,6 @@ const CategoryDialog = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const productCategoriesState = useSelector(productCategoriesSelector);
-    console.log(productCategoriesState);
     const { open, onClose, history } = props;
     const { product_id : productId, product_name : productName } = {...props.product };
     const { loading, hasError, mainCategories, subCategories } = {...productCategoriesState};

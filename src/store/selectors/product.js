@@ -5,6 +5,8 @@ export const productCategoriesSelector = (state) => {
         loading: state.product.loading,
         hasError: state.product.hasError,
         mainCategories: state.product.mainCategories,
-        subCategories: state.product.subCategories
+        subCategories: state.product.subCategories,
+        updateSuccess: state.product.updateSuccess,
+        deleteSuccess: state.product.deleteSuccess
     }
 };

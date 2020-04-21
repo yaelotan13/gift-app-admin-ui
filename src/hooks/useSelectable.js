@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useCheckbox = () => {
+const useSelectable = () => {
     const [checked, setChecked] = useState([]);
 
     const handleToggle = (value) => () => {
@@ -19,4 +19,4 @@ const useCheckbox = () => {
       return [checked, handleToggle];
 };
 
-export default useCheckbox;
+export default useSelectable;

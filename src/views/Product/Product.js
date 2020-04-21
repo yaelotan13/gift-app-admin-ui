@@ -7,14 +7,14 @@ import {
 } from '@material-ui/core';
 
 import { ProductPage } from '../../components';
+import { WithMenue } from '../../hocs';
+import ProductPageHeader from './ProductPageHeader';
 
 const useStyles = makeStyles({
     root: {
+        marginLeft: 240,
         height: '100vh',
         padding: '3vh'
-    },
-    headline: {
-        margin: '1vh 0 4vh 16vw'
     },
     center: {
         height: '50vh',
@@ -24,16 +24,16 @@ const useStyles = makeStyles({
     }
 });
 
-const Edit = (props) => {
+const Product = ({ location, title, buttonTitle }) => {
     const classes = useStyles();
-    const productId = props.location.search.slice(props.location.search.indexOf('=') + 1);
+    const productId = location.search.slice(location.search.indexOf('=') + 1);
 
     return (
         <Box className={classes.root}>
-            <Typography variant="h5" className={classes.headline}>Edit Product</Typography>
-            <ProductPage productId={productId} buttonTitle="Update"/>           
+            <ProductPageHeader title={title} />
+            <ProductPage productId={productId} buttonTitle={buttonTitle} />           
         </Box>
     );
 };
 
-export default withRouter(Edit);
+export default WithMenue(withRouter(Product));

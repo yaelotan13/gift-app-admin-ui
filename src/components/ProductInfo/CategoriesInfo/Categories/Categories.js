@@ -11,6 +11,7 @@ import { Prompt } from '../../../Layout';
 import CategoriesHeader from './CategoriesHeader';
 import { CategoriesList, CategoriesAvatarList } from './CategoriesList';
 import { ActionButtons } from '../../../Layout';
+import { SelectableSubCategories } from './CategoriesList';
 
 const useStyle = makeStyles({
     categoriesContainer: {
@@ -28,13 +29,14 @@ const toggleCategory = (categories, category) => {
 
 const Categories = (props) => {
     const classes = useStyle();
-    const { handleDelete, categories, title, type } = props; 
+    const { categories, handleDelete, handleAdd, title, type, updateSuccess, deleteSuccess, loading } = props; 
     const [openDeletePrompt, setOpenDeletePrompt] = useState(false);
     const [openCategoriesPrompt, setOpenCategoriesPrompt] = useState(false);
     const [mainCategoriesSelected, setMainCategoriesSelected] = useState([]);
     const [subCategoriesSelected, setSubCategoriesSelected] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
     console.log(categoriesState);
+
     const handleMainCategorySelected = (category) => {
         setMainCategoriesSelected((prevSelected) => {
             return toggleCategory(prevSelected, category);
@@ -49,6 +51,7 @@ const Categories = (props) => {
 
     const handleDeleteCategories = () => {
         type === 'main' ? handleDelete(mainCategoriesSelected) : handleDelete(subCategoriesSelected);
+        setOpenDeletePrompt(false);
     }
 
     const getString = deleteCategories => `Are you sure you want to delete ${deleteCategories} from categories?`
@@ -61,16 +64,16 @@ const Categories = (props) => {
     }
 
     const handleAddCategories = (categoriesSelected) => {
-        console.log('in handleAddCategories');
-        console.log(categoriesSelected);
+        handleAdd(categoriesSelected);
+        setOpenCategoriesPrompt(false);
     };
 
     return (
         <Box>
             <Prompt 
-                open={categoriesState.deleteSuccess ? false : openDeletePrompt} 
+                open={openDeletePrompt} 
                 title="delete categories dialog"
-                loading={categoriesState.loading}
+                loading={loading}
             >
                 <Fragment>
                     <Typography variant="subtitle1" align="center">{getQuestion(type)}</Typography>
@@ -91,10 +94,11 @@ const Categories = (props) => {
                     action="Add"
                 />
                 :
-                <CategoriesList 
-                    type="sub"
-                    categories={categoriesState.subCategories}
-                    categoriesSelected={[]}
+                <SelectableSubCategories 
+                    subCategories={categoriesState.subCategories}
+                    onAction={(selected) => handleAddCategories(selected)}
+                    onCancel={() => setOpenCategoriesPrompt(false)}
+                    action="Add"
                 />}
             </Prompt>
             <CategoriesHeader 

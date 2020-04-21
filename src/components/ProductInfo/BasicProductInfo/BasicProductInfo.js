@@ -1,85 +1,48 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import {
-    TextField,
-    Input,
-    Box
-} from '@material-ui/core';
-import grey from '@material-ui/core/colors/grey';
+
+import Inputs from './Inputs';
+import { Checkmark } from 'react-checkmark';
+import { WithCenter } from '../../../hocs';
 
 const useStyles = makeStyles({
     form: {
+        width: '100%',
         marginLeft: '3vw',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        height: '80vh',
     },
-    textInput: {
-        width: '40vw',
-        marginBottom: '4vh',
-    },
-    img: {
-        marginTop: '1vh',
-        width: '15vw',
-        height: '20vh',
-        border: `1px solid ${grey[300]}`,
-        borderRadius: 5,
-    }
 });
-
-const DEFAULT_PRODUCT_INFO = {
-    product_id: null,
-    product_name: '',
-    store: '',
-    price: '',
-    link: '',
-    product_image: ''
-};
 
 const BasicProductInfo = (props) => {
     const classes = useStyles();
-    const { 
-        productId, 
-        productName, 
-        store, 
-        price, 
-        link,
-        productImage 
-    } = props.productInfo ? { ...props.productInfo } : DEFAULT_PRODUCT_INFO;
-    
+    const { productInfo, updateSuccessful, history, onFileChange, handleChnage, imgUrl } = props;
+
+    const updateSuccess = () => {
+        setTimeout(() => {
+            history.push('/feed');
+        }, 2000);
+
+        return (
+            <WithCenter>
+                <Checkmark />
+            </WithCenter>
+        );
+    };
+
     return (
         <form className={classes.form}>
-            <TextField 
-                id="standard-basic" 
-                label="Name" 
-                className={classes.textInput} 
-                variant="outlined" 
-                defaultValue={productName}
-            />
-            <TextField 
-                id="standard-basic" 
-                label="Store" 
-                className={classes.textInput} 
-                variant="outlined" 
-                defaultValue={store}
-            />
-            <TextField 
-                id="standard-basic" 
-                label="Price" 
-                className={classes.textInput} 
-                variant="outlined" 
-                defaultValue={price}
-            />
-            <TextField 
-                id="standard-basic" 
-                label="Link" 
-                className={classes.textInput} 
-                variant="outlined" 
-                defaultValue={link}
-            />
-            Image: <Input type="file" disableUnderline={true}/>
-            <Box className={classes.img} />
+            {
+                updateSuccessful ?
+                updateSuccess() 
+                :
+                <Inputs imgUrl={imgUrl} values={productInfo} handleChnage={handleChnage} onFileChange={onFileChange} />
+            }
         </form>
     );
 };
 
-export default BasicProductInfo;
+export default withRouter(BasicProductInfo);

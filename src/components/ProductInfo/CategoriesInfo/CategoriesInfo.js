@@ -7,7 +7,9 @@ import { productCategoriesSelector } from '../../../store/selectors/product';
 import Categories from './Categories';
 import {  
     deleteMainCategories as deleteMainCategoriesAction, 
-    deleteSubCategories as deleteSubCategoriesAction
+    deleteSubCategories as deleteSubCategoriesAction,
+    addSubCategories as addSubCategoriesAction,
+    addMainCategories as addMainCategoriesAction
 } from '../../../store/product/actions';
 
 const useStyles = makeStyles({
@@ -21,6 +23,7 @@ const CategoriesInfo = (props) => {
     const dispatch = useDispatch();
     const { productId } = props;
     const categoriesSelector = useSelector(productCategoriesSelector);
+    let { mainCategories, subCategories } = { ...categoriesSelector };
 
     const deleteMainCategories = (selectedCategories) => {
         dispatch(deleteMainCategoriesAction(productId, selectedCategories));
@@ -30,19 +33,35 @@ const CategoriesInfo = (props) => {
         dispatch(deleteSubCategoriesAction(productId, selectedCategories));
     };
 
+    const addSubCategories = (subCategories) => {
+        dispatch(addSubCategoriesAction(productId, subCategories));
+    };
+
+    const addMainCategories = (mainCategories) => {
+        dispatch(addMainCategoriesAction(productId, mainCategories));
+    };
+
     return (
         <div className={classes.root}>
             <Categories 
                 type="main"
                 handleDelete={deleteMainCategories}
-                categories={categoriesSelector.mainCategories}
+                handleAdd={addMainCategories}
+                categories={mainCategories}
                 title="Main Categories"
+                updateSuccess={categoriesSelector.updateSuccess}
+                deleteSuccess={categoriesSelector.deleteSuccess}
+                loading={categoriesSelector.loading}
             />
             <Categories 
                 type="sub"
                 handleDelete={deleteSubCategories}
-                categories={categoriesSelector.subCategories}
+                handleAdd={addSubCategories}
+                categories={subCategories}
                 title="Sub Categories"
+                updateSuccess={categoriesSelector.updateSuccess}
+                deleteSuccess={categoriesSelector.deleteSuccess}
+                loading={categoriesSelector.loading}
             />
         </div>
     ); 

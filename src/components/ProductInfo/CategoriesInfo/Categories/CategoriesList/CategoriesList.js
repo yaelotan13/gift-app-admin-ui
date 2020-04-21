@@ -6,6 +6,11 @@ import MainCategoryImage from '../MainCategoryImage';
 import SubCategory from '../SubCategory';
 
 const useStyle = makeStyles({
+    wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
     categoriesContainer: {
         width: '100%',
         display: 'flex',
@@ -32,12 +37,13 @@ const CategoriesList = (props) => {
                     :
                     <SubCategory 
                         key={category.sub_category_id}
+                        id={category.sub_category_id}
                         title={category.sub_category_name} 
-                        handleClick={handleSubCategorySelected}  
+                        handleClick={handleSubCategorySelected} 
                         selected={categoriesSelected.includes(category.sub_category_name)} 
                     />
             }})}
-    </Box>
+        </Box>
     );
 };
 

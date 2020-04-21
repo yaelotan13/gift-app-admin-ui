@@ -8,10 +8,10 @@ import {
 } from '@material-ui/core';
 
 import { ActionButtons } from '../../../../Layout';
-import useCheckbox from '../../../../../hooks/useCheckbox';
+import useSelectable from '../../../../../hooks/useSelectable';
 
 const CategoriesAvatarList = (props) => {
-    const [checked, handleToggle] = useCheckbox();
+    const [checked, handleToggle] = useSelectable();
     const { mainCategories, selectable, onAction, onCancel, action } = props;
 
     return (

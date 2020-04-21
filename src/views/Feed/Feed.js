@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { Box, Typography, Table, TableBody, TableHead, TableCell, TableContainer, TableRow } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import { CategoryDialog } from '../../components';
 import { CenteredSpinner } from '../../components/Layout';
 import useSelector from '../../hooks/useSelctor';
 import { productsSlector } from '../../store/selectors/products';
 import CategoriesDialog from '../../components/Categories/CategoriesDialog';
+import { WithMenue } from '../../hocs';
+import ProductTable from './ProductsTable';
+import ProductsHeader from './ProductsHeader';
+import Search from './Search';
+import { fetchAllProducts } from '../../store/products/actions';
 
 const useStyles = makeStyles({
     container: {
+        marginLeft: 240,
         padding: '30px'
     },
     center: {
@@ -22,20 +28,30 @@ const useStyles = makeStyles({
         maxWidth: '80vw',
         margin: '5vh auto'
     },
-    dots: {
+    icon: {
         cursor: 'pointer'
     }
 });
 
 const Feed = (props) => {
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
     const [product, setProduct] = useState(0);
     const productsState = useSelector(productsSlector);
 
-    const handleShowCategories = async (product) => {
+    const handleShowCategories = (product) => {
         setProduct(product);
         setOpenCategoryDialog(true);
+    };
+
+    const handleEditProduct = (productId) => {
+        history.push(`/edit/?product_id=${productId}`);
+    };
+
+    const handleRefresh = () => {
+        dispatch(fetchAllProducts());
     };
 
     return (
@@ -45,39 +61,9 @@ const Feed = (props) => {
                 <CenteredSpinner />
                 :
                 <Box>
-                    <Typography variant="h5">Products</Typography>
-                    <TableContainer>
-                        <Table className={classes.table}>
-                            <TableHead>
-                                <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell>Name</TableCell>
-                                <TableCell>Store</TableCell>
-                                <TableCell>Price</TableCell>
-                                <TableCell>Image</TableCell>
-                                <TableCell>Link</TableCell>
-                                <TableCell>Categories</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {productsState.products.map((product) => (
-                                    <TableRow key={product.product_id}>
-                                        <TableCell>{product.product_id}</TableCell>
-                                        <TableCell>{product.product_name}</TableCell>
-                                        <TableCell>{product.store}</TableCell>
-                                        <TableCell>{product.price}</TableCell>
-                                        <TableCell>{product.product_image}</TableCell>
-                                        <TableCell>{product.link}</TableCell>
-                                        <TableCell>
-                                            <div onClick={() => handleShowCategories(product)}>
-                                                <MoreHorizIcon className={classes.dots} />
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <ProductsHeader size={productsState.products.length} onRefresh={handleRefresh} />
+                    <Search />
+                    <ProductTable products={productsState.products} handleShowCategories={handleShowCategories} handleEditProduct={handleEditProduct} />
                     <CategoriesDialog product={product} open={openCategoryDialog} onClose={() => setOpenCategoryDialog(false)} />
                 </Box>
             }
@@ -85,4 +71,4 @@ const Feed = (props) => {
     )
 };
 
-export default Feed;
+export default WithMenue(Feed);

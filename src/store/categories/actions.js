@@ -7,10 +7,9 @@ export const fetchCategories = (productId) => {
     };
 };
 
-export const deleteMainCategories = (productId, mainCategories) => {
+export const deleteMainCategories = (mainCategories) => {
     return {
         type: actionTypes.DELETE_MAIN_CATEGORIES,
-        productId,
         payload: mainCategories
     };
 };
@@ -28,3 +27,10 @@ export const fetchAllCategories = () => {
         type: actionTypes.FETCH_ALL_CATEGORIES,
     }
 };
+
+export const addMainCategory = (newCategory) => {
+    return {
+        type: actionTypes.ADD_MAIN_CATEGORY,
+        payload: newCategory
+    }
+}

@@ -20,6 +20,7 @@ import { productSlector } from '../../store/selectors/product';
 import { fetchProductInfo, clearProductInfo,updateProductInfo, addNewProduct } from '../../store/product/actions';
 import { fetchAllProducts } from '../../store/products/actions';
 import { WithCenter } from '../../hocs';
+import { SingleButton } from '../../components/Layout';
 
 const useStyles = makeStyles({
     tabsWrapper: {
@@ -84,6 +85,7 @@ const ProductPage = (props) => {
     const productInfo = useSelector(productSlector);
     const [values, setValues] = useState({ ...productInfo });
     const [imgUrl, setImgUrl] = useState(null);
+    const [img, setImg] = useState(values.productImage);
 
     useEffect(() => {
         isAddingNewProduct() ? 
@@ -106,18 +108,19 @@ const ProductPage = (props) => {
     };
 
     const onFileChange = (event) => {
+        setImg(event.target.files[0]);
         const url = window.URL.createObjectURL(event.target.files[0]);
         setImgUrl(url);
     };
 
     const onSubmit = () => {
+        console.log(imgUrl);
         const currentProduct = {
             name: values.productName,
             store: values.store,
             price: values.price,
             link: values.link,
-            image: 'testImage',
-            // image: imgUrl ? imgUrl : values.productImage,
+            image: img,
             subCategories: productInfo.subCategories,
             mainCategories: productInfo.mainCategories
         };
@@ -157,7 +160,7 @@ const ProductPage = (props) => {
                             aria-label="products sections tabs"
                             className={classes.tabs}
                         >
-                            <Tab label="ProductInfo" {...a11yProps(0)} />
+                            <Tab label="Info" {...a11yProps(0)} />
                             <Tab label="Categories" {...a11yProps(1)} />
                         </Tabs>
                         {
@@ -182,11 +185,9 @@ const ProductPage = (props) => {
                     </Fragment>
                 }
             </div>
-            <Box className={classes.buttonContainer}>
-                <Button variant="contained" color="secondary" className={classes.button} onClick={onSubmit}>
-                    {buttonTitle}
-                </Button>
-            </Box>
+            <WithCenter>
+                <SingleButton onSubmit={onSubmit} buttonTitle={buttonTitle} variant="contained" />
+            </WithCenter>
         </div>
     )
 };

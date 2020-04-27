@@ -1,28 +1,30 @@
 import { 
     getProductInfo, 
-    deleteMainCategories, 
-    deleteSubCategories,
+    deleteMainCategoriesFromProduct,
+    deleteSubCategoriesFromProduct,
     addMainCategories,
     addSubCategories,
     updateProductInfo,
     addNewProduct
 } from './product';
-import { getProducts, deleteProduct } from './products'
-import { getAllCategories } from './categories';
+import { getProducts, deleteProducts } from './products'
+import { getAllCategories, addMainCategory, deleteMainCategories } from './categories';
 
 export const categoriesService = {
-    getAllCategories
+    getAllCategories,
+    addMainCategory,
+    deleteMainCategories
 };
 
 export const productsService = {
     getProducts,
-    deleteProduct
+    deleteProducts
 };
 
 export const productService = {
     getProductInfo,
-    deleteMainCategories,
-    deleteSubCategories,
+    deleteMainCategoriesFromProduct,
+    deleteSubCategoriesFromProduct,
     addMainCategories,
     addSubCategories,
     updateProductInfo,

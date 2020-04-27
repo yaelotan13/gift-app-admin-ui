@@ -84,6 +84,7 @@ const Categories = (props) => {
                 open={openCategoriesPrompt} 
                 title="categories dialog"
                 loading={categoriesState.loading}
+                meduim
             >
                 {type === 'main' ?
                 <CategoriesAvatarList 

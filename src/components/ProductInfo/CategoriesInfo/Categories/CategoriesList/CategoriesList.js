@@ -31,8 +31,8 @@ const CategoriesList = (props) => {
                         key={category.main_category_id}
                         title={category.main_category_name}
                         img={category.main_category_image}
-                        handleClick={handleMainCategorySelected}
-                        selected={categoriesSelected.includes(category.main_category_name)} 
+                        handleClick={() => handleMainCategorySelected(category)}
+                        selected={categoriesSelected ? categoriesSelected.includes(category.main_category_name) : null} 
                     />
                     :
                     <SubCategory 

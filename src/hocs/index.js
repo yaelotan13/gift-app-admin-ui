@@ -1,7 +1,7 @@
 import WithCenter from './WithCenter';
-import WithMenue from './WithMenue';
+import WithMenu from './WithMenu';
 
 export {
     WithCenter,
-    WithMenue
+    WithMenu
 };

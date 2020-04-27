@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
-import { Menue } from '../components/Layout';
+import { Menu } from '../components/Layout';
 
-const WithMenue = (WrappedComponent) => {
+const WithMenu = (WrappedComponent) => {
     return (props) => (
         <Fragment>
-            <Menue />
+            <Menu />
             <WrappedComponent {...props} />
         </Fragment>
     );
 };
 
-export default WithMenue;
+export default WithMenu;

@@ -16,10 +16,11 @@ const useStyle = makeStyles({
         cursor: 'pointer',
     },
     image: {
-        width: '12vw',
-        height: '15vh',
-        backgroundImage: `url(${tempImage})`,
+        width: '10vw',
+        height: '11vh',
         backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroudPosition: 'center',
         border: `1px solid ${grey[300]}`,
         '&:hover': {
             opacity: 0.8,
@@ -39,7 +40,7 @@ const MainCategoryImage = (props) => {
 
     return (
         <Box className={classes.mainCategory} onClick={() => handleClick(title)}>
-            <Box className={selected ? [classes.image, classes.selected].join(' ') : classes.image} />
+            <Box style={{backgroundImage: `url(${img ? img : tempImage})`}} className={selected ? [classes.image, classes.selected].join(' ') : classes.image} />
             <Typography 
                 gutterBottom 
                 variant="subtitle1" 

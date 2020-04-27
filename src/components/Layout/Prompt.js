@@ -15,15 +15,25 @@ const useStyles = makeStyles({
         flexDirection:'column',
         justifyContent: 'center',
     },
+    meduim: {
+        height: '50vh',
+    },
+    large: {
+        height: '75vh',
+    }
 });
 
 const Prompt = (props) => {
     const classes = useStyles();
-    const { title, onCancel, open, children, loading } = props;
+    const { title, onCancel, open, children, loading, large, meduim } = props;
 
     return (
         <Dialog open={open} onClose={onCancel} aria-labelledby={title}>
-            <Box className={classes.content}>
+            <Box 
+                className={large ? [classes.content, classes.large].join(' ') : 
+                meduim ? [classes.content, classes.meduim].join(' ') : 
+                classes.content}
+            >
                 {
                     loading ?
                     <CenteredSpinner />

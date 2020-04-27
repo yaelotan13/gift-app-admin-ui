@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import CategoryIcon from '@material-ui/icons/Category';
+import RedeemIcon from '@material-ui/icons/Redeem';
 import { Link } from 'react-router-dom';
-import { url } from '../../config/clientUrl';
 
 const useStyles = makeStyles({
     drawer: {
@@ -22,9 +22,36 @@ const useStyles = makeStyles({
     }
 });
 
-const Menue = (props) => {
+const Menu = (props) => {
     const classes = useStyles();
 
+    const getPath = (index) => {
+        switch (index) {
+            case 0: {
+                return '/feed';
+            }
+            case 1: {
+                return '/add-product';
+            }
+            case 2: {
+                return '/categories';
+            }
+        }
+    };
+
+    const getIcon = (index) => {
+        switch (index) {
+            case 0: {
+                return <HomeIcon />;
+            }
+            case 1: {
+                return <RedeemIcon />;
+            }
+            case 2: {
+                return <CategoryIcon />;
+            }
+        }
+    }
     return (
         <Drawer
             className={classes.drawer}
@@ -35,11 +62,10 @@ const Menue = (props) => {
             anchor="left"
         >
             <List className={classes.list}>
-            {['Home', 'New product'].map((text, index) => (
-                <Link to={index === 0 ? '/feed' : 'add-product'} className={classes.link}>
+            {['Home', 'New Product', 'Categories'].map((text, index) => (
+                <Link to={getPath(index)} className={classes.link}>
                     <ListItem button key={text}>
-                        <Link to={index === 0 ? '/feed' : '/add-product'} />
-                        <ListItemIcon>{index === 0 ? <HomeIcon /> : <AddCircleOutlineIcon />}</ListItemIcon>
+                        <ListItemIcon>{getIcon(index)}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
                 </Link>
@@ -49,4 +75,4 @@ const Menue = (props) => {
     );
 };
 
-export default Menue;
+export default Menu;

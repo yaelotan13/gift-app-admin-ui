@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        height: '80vh',
+        height: '65vh',
     },
 });
 

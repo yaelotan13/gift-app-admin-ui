@@ -8,12 +8,13 @@ import {
     addNewProduct
 } from './product';
 import { getProducts, deleteProducts } from './products'
-import { getAllCategories, addMainCategory, deleteMainCategories } from './categories';
+import { getAllCategories, addMainCategory, deleteMainCategories, editSubCategoriesToMainCategory } from './categories';
 
 export const categoriesService = {
     getAllCategories,
     addMainCategory,
-    deleteMainCategories
+    deleteMainCategories,
+    editSubCategoriesToMainCategory
 };
 
 export const productsService = {

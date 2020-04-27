@@ -221,3 +221,20 @@ export function* DeleteMainCategories(action) {
         })
     }
 }
+
+export function* EditSubCategoriesToMain(action) {
+    try {
+        const result = yield call(categoriesService.editSubCategoriesToMainCategory, action.payload);
+        console.log(result);
+        yield put({
+            type: categoriesActionTypes.EDIT_SUB_CATEGORIS_TO_MAIN_SUCCESS,
+            payload: result.data
+        })
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: categoriesActionTypes.FETCH_FAILURE,
+            payload: error
+        })
+    }
+}

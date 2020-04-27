@@ -17,7 +17,8 @@ import {
     AddNewProduct,
     DeleteProduct,
     AddMainCategories,
-    DeleteMainCategories
+    DeleteMainCategories,
+    EditSubCategoriesToMain
 } from './api'; // TODO - Upper case ?
 
 function* rootSaga() {
@@ -33,6 +34,7 @@ function* rootSaga() {
     yield takeLatest(productsActionTypes.DELETE_PRODUCT, DeleteProduct);
     yield takeLatest(categoriesActionTypes.ADD_MAIN_CATEGORY, AddMainCategories);
     yield takeLatest(categoriesActionTypes.DELETE_MAIN_CATEGORIES, DeleteMainCategories);
+    yield takeLatest(categoriesActionTypes.EDIT_SUB_CATEGORIS_TO_MAIN, EditSubCategoriesToMain);
 };
 
 export default rootSaga;

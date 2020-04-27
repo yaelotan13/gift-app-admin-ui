@@ -38,3 +38,13 @@ export const deleteMainCategories = async (categories) => {
     return await await axios.get(`${categoriesUrl}main`);
 };
 
+export const editSubCategoriesToMainCategory = async (subCategoriesInfo) => {
+    const { mainCategoryId, removedCategories, addedCategories } = subCategoriesInfo;
+    const result = await axios.post(`${categoriesUrl}sub?mainCategoryId=${mainCategoryId}`, {
+        removedCategories,
+        addedCategories
+    });
+
+    console.log(result);
+    return await getAllCategories(); // TODO only fetch sub categories ?
+};

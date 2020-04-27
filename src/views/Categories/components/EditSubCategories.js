@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Box, IconButton } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import useSelector from '../../../hooks/useSelctor';
@@ -68,8 +68,8 @@ const EditSubCategories = (props) => {
     }
 
     const handleSave = () => {
-        console.log(categoryId);
-        console.log(categories);
+        const subCategories = Array.from(categories, category => category.sub_category_name)
+        handleEdit(categoryId, subCategories);
     }
     
     return (

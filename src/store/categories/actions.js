@@ -33,4 +33,11 @@ export const addMainCategory = (newCategory) => {
         type: actionTypes.ADD_MAIN_CATEGORY,
         payload: newCategory
     }
+};
+
+export const editSubCategoriesToMain = (payload) => {
+    return {
+        type: actionTypes.EDIT_SUB_CATEGORIS_TO_MAIN,
+        payload
+    }
 }

@@ -32,7 +32,7 @@ const Input = (props) => {
         <Box className={classes.container}>
             <TextField 
                 id="standard-basic" 
-                label="sub-category name" 
+                label="Name" 
                 name="name"
                 value={value}
                 onChange={event => setValue(event.target.value)}

@@ -9,3 +9,32 @@ export const getAllCategories = async () => {
         sub: subCategories.data
     };
 };
+
+const getMainCategoryFormData = (category) => {
+    const bodyFormData = new FormData();
+    bodyFormData.set('name', category.name);
+    bodyFormData.set('image', category.image);
+
+    return bodyFormData;
+};
+
+export const addMainCategory = async (newCategory) => {
+    const category =  getMainCategoryFormData(newCategory);
+    const config = {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    };
+
+    await axios.post(`${categoriesUrl}main`, category, config);
+    return await axios.get(`${categoriesUrl}main`);
+};
+
+export const deleteMainCategories = async (categories) => {
+    await axios.delete(`${categoriesUrl}main`, {
+        data: {
+            main_categories: categories
+        }
+    });
+
+    return await await axios.get(`${categoriesUrl}main`);
+};
+

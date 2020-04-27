@@ -4,7 +4,8 @@ import ListDialog from './ListDialog';
 import Prompt from './Prompt';
 import ActionButtons from './ActionButtons';
 import FileUploader from './FileUploader';
-import Menue from './Menue';
+import Menu from './Menu';
+import SingleButton from './SingleButton';
 
 export {
     Header,
@@ -13,5 +14,6 @@ export {
     Prompt,
     ActionButtons,
     FileUploader,
-    Menue
+    Menu,
+    SingleButton
 };

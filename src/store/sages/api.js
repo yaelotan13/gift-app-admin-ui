@@ -67,9 +67,9 @@ export function* FetchCategories(action) {
     }
 }
 
-export function* DeleteMainCategories(action) {
+export function* DeleteMainCategoriesFromProduct(action) {
     try {
-        const result = yield call(productService.deleteMainCategories, action.productId, action.payload);
+        const result = yield call(productService.deleteMainCategoriesFromProduct, action.productId, action.payload);
         console.log(result);
         yield put({
             type: productActionsTypes.DELETE_MAIN_CATEGORIES_FROM_PRODUCT_SUCCESS,
@@ -83,9 +83,9 @@ export function* DeleteMainCategories(action) {
     }
 };
 
-export function* DeleteSubCategories(action) {
+export function* DeleteSubCategoriesFromProduct(action) {
     try {
-        const result = yield call(productService.deleteSubCategories, action.productId, action.payload);
+        const result = yield call(productService.deleteSubCategoriesFromProduct, action.productId, action.payload);
         console.log(result);
         yield put({
             type: productActionsTypes.DELETE_SUB_CATEGORIES_FROM_PRODUCT_SUCCESS,
@@ -172,7 +172,7 @@ export function* AddNewProduct(action) {
 export function* DeleteProduct(action) {
     console.log('in saga DeleteProduct');
     try {
-        const result = yield call(productsService.deleteProduct, action.payload);
+        const result = yield call(productsService.deleteProducts, action.payload);
         console.log(result);
         yield put({
             type: productsActionsTypes.DELETE_PRODUCT_SUCCESS,
@@ -186,3 +186,38 @@ export function* DeleteProduct(action) {
         })
     }
 };
+
+export function* AddMainCategories(action) {
+    console.log('in saga AddMainCategories');
+    try {
+        const result = yield call(categoriesService.addMainCategory, action.payload);
+        console.log(result);
+        yield put({
+            type: categoriesActionTypes.ADD_MAIN_CATEGORY_SUCCESS,
+            payload: result.data
+        })
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: categoriesActionTypes.FETCH_FAILURE,
+            payload: error
+        })
+    }
+}
+
+export function* DeleteMainCategories(action) {
+    try {
+        const result = yield call(categoriesService.deleteMainCategories, action.payload);
+        console.log(result);
+        yield put({
+            type: categoriesActionTypes.DELETE_MAIN_CATEGORIES_SUCCESS,
+            payload: result.data
+        })
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: categoriesActionTypes.FETCH_FAILURE,
+            payload: error
+        })
+    }
+}

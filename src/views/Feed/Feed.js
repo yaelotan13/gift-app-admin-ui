@@ -8,7 +8,7 @@ import { CenteredSpinner } from '../../components/Layout';
 import useSelector from '../../hooks/useSelctor';
 import { productsSlector, filteredProductsSelector } from '../../store/selectors/products';
 import CategoriesDialog from '../../components/Categories/CategoriesDialog';
-import { WithMenue } from '../../hocs';
+import { WithMenu } from '../../hocs';
 import ProductTable from './ProductsTable';
 import ProductsHeader from './ProductsHeader';
 import Search from './Search';
@@ -17,6 +17,7 @@ import { Prompt, ActionButtons } from '../../components/Layout';
 
 const useStyles = makeStyles({
     container: {
+        height: '95vh',
         marginLeft: 240,
         padding: '30px'
     },
@@ -41,12 +42,21 @@ const Feed = (props) => {
     const [open, setOpen] = useState(false);
     const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
     const [product, setProduct] = useState(0);
+    const [selectedProducts, setSelectedProducts] = useState([]);
     const productsState = useSelector(productsSlector);
     const filteredProducts = useSelector(filteredProductsSelector);
-
+    
     const handleShowCategories = (product) => {
         setProduct(product);
         setOpenCategoryDialog(true);
+    };
+
+    const toggleProductClicked = (product) => {
+        if (selectedProducts.indexOf(product) === -1) {
+            setSelectedProducts(prevState => [...prevState, product]);
+        } else {
+            setSelectedProducts(prevState => prevState.filter(curProduct => curProduct !== product))
+        }
     };
 
     const handleEditProduct = (productId) => {
@@ -57,15 +67,11 @@ const Feed = (props) => {
         dispatch(fetchAllProducts());
     };
 
-    const handleDeleteProduct = (product) => {
-        setOpen(true);
-        setProduct(product);
-    };
-
     const deleteProduct = () => {
         console.log('dispatching...');
+        const productsIds = Array.from(selectedProducts, product => product.product_id);
         setOpen(false);
-        dispatch(deleteProductAction(product.product_id));
+        dispatch(deleteProductAction(productsIds));
     };
 
     const onSearchInputChanged = (value) => {
@@ -88,7 +94,7 @@ const Feed = (props) => {
                         loading={productsState.loading}
                     >
                         <Box>
-                            <Typography variant="body1" align="center">{`Delete ${product.product_name} product?`}</Typography>
+                            <Typography variant="body1" align="center">{`Delete ${Array.from(selectedProducts, product => product.product_name).join(', ')} from product?`}</Typography>
                             <ActionButtons 
                                 onCancel={() => setOpen(false)}
                                 onAction={deleteProduct}
@@ -96,13 +102,19 @@ const Feed = (props) => {
                             />
                         </Box>
                     </Prompt>
-                    <ProductsHeader size={productsState.products.length} onRefresh={handleRefresh} />
+                    <ProductsHeader 
+                        size={productsState.products.length} 
+                        onRefresh={handleRefresh} 
+                        categoriesToDelete={selectedProducts} 
+                        onDelete={() => setOpen(true)}
+                    />
                     <Search value={productsState.searchText} onChange={(value) => onSearchInputChanged(value)} />
                     <ProductTable 
                         products={filteredProducts} 
                         handleShowCategories={handleShowCategories} 
                         handleEditProduct={handleEditProduct} 
-                        handleDeleteProduct={handleDeleteProduct} 
+                        values={selectedProducts}
+                        toggleClicked={toggleProductClicked}
                     />
                     <CategoriesDialog product={product} open={openCategoryDialog} onClose={() => setOpenCategoryDialog(false)} />
                 </Box>
@@ -111,4 +123,4 @@ const Feed = (props) => {
     )
 };
 
-export default WithMenue(Feed);
+export default WithMenu(Feed);

@@ -4,11 +4,13 @@ import { Box, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
     buttonContainer: {
-        width: '40%',
+        width: '35%',
         margin: '0 auto',
-        marginTop: '3vh',
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+    },
+    cancelButton: {
+        marginRight: '1vw'
     }
 });
 
@@ -18,7 +20,7 @@ const ActionButtons = (props) => {
 
     return (
         <Box className={classes.buttonContainer}>
-            <Button onClick={onCancel} variant="outlined" color="primary">Cancel</Button>
+            <Button className={classes.cancelButton} onClick={onCancel} variant="outlined" color="primary">Cancel</Button>
             <Button onClick={onAction} variant="contained" color="primary">{action}</Button>
         </Box>
     );

@@ -16,7 +16,7 @@ const getCategories = async (productId) => {
     return result.data;
 };
 
-export const deleteMainCategories = async (productId, mainCategories) => {
+export const deleteMainCategoriesFromProduct = async (productId, mainCategories) => {
     await axios.delete(`${categoriesUrl}?product_id=${productId}`, {
         data: {
             main_categories: mainCategories
@@ -26,7 +26,7 @@ export const deleteMainCategories = async (productId, mainCategories) => {
     return await getCategories(productId);
 };
 
-export const deleteSubCategories = async (productId, subCategories) => {
+export const deleteSubCategoriesFromProduct = async (productId, subCategories) => {
     await axios.delete(`${categoriesUrl}?product_id=${productId}`, {
         data: {
             sub_categories: subCategories
@@ -60,14 +60,24 @@ export const updateProductInfo = async (productId, updatedInfo) => {
     return await getProductInfo(productId);
 };
 
+const getFormData = (product) => {
+    const bodyFormData = new FormData();
+    bodyFormData.set('name', product.name);
+    bodyFormData.set('store', product.store);
+    bodyFormData.set('price', product.price);
+    bodyFormData.set('link', product.link);
+    bodyFormData.set('image', product.image);
+
+    return bodyFormData;
+};
+
 export const addNewProduct = async (newProduct) => {
-    const response = await axios.post(productUrl, {
-        name: newProduct.name,
-        store: newProduct.store,
-        price: newProduct.price,
-        link: newProduct.link,
-        image: newProduct.image
-    });
+    const product = getFormData(newProduct);
+    const config = {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    };
+
+    const response = await axios.post(productUrl, product, config);
 
     const newProductId = response.data.productId;
     if (newProduct.subCategories.length > 0) {

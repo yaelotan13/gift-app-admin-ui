@@ -22,19 +22,19 @@ const CategoriesAvatarList = (props) => {
                 return (
                     <ListItem 
                         key={category.main_category_id} 
-                        onClick={selectable && handleToggle(category.main_category_id)}
+                        onClick={selectable && handleToggle(category)}
                         button={true && selectable}
                     >
                         {selectable &&
                         <Checkbox
                             edge="start"
-                            checked={checked.indexOf(category.main_category_id) !== -1}
+                            checked={checked.indexOf(category) !== -1}
                             tabIndex={-1}
                             disableRipple
                             inputProps={{ 'aria-labelledby': labelId }}
                         />}
                         <ListItemAvatar>
-                            <Avatar></Avatar>
+                            <Avatar src={category.main_category_image}></Avatar>
                         </ListItemAvatar>
                         {category.main_category_name}
                     </ListItem>

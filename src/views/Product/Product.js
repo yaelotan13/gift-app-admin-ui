@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 
 import { ProductPage } from '../../components';
-import { WithMenue } from '../../hocs';
+import { WithMenu } from '../../hocs';
 import ProductPageHeader from './ProductPageHeader';
 
 const useStyles = makeStyles({
@@ -36,4 +36,4 @@ const Product = ({ location, title, buttonTitle }) => {
     );
 };
 
-export default WithMenue(withRouter(Product));
+export default WithMenu(withRouter(Product));

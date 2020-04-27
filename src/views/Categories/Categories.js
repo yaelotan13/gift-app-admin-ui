@@ -10,7 +10,7 @@ import { categoriesSlector } from '../../store/selectors/categories';
 import { CenteredSpinner } from '../../components/Layout';
 import { Prompt } from '../../components/Layout';
 import { EditSubCategories, NewMainCategory, DeleteMainCategory, MainCategoriesList } from './components';
-import { addMainCategory, deleteMainCategories } from '../../store/categories/actions';
+import { addMainCategory, deleteMainCategories, editSubCategoriesToMain, fetchAllCategories } from '../../store/categories/actions';
 
 const useStyles = makeStyles({
     root: {
@@ -34,15 +34,38 @@ const Categories = (props) => {
     const [category, setCategory] = useState(null);
     const [selectedMainCategories, setSelectedMainCategories] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
-    const { history } = props;
+    console.log(categoriesState);
 
     const handleCategoryClick = (category) => {
         setCategory(category);
         setOpen(true);
     };
 
-    const handleEdit = (categoryId) => {
-        history.push(`/edit-category/category_id=${categoryId}`);
+    const handleEdit = (mainCategoryId, subCategories) => {
+        const originalSubCategories = categoriesState.subCategories.filter(category => category.main_category_id === mainCategoryId);
+        const originalSubCategoriesNames = Array.from(originalSubCategories, category => category.sub_category_name);
+        const removedCategories = [];
+        const addedCategories = [];
+
+        originalSubCategoriesNames.forEach(category => {
+            if (subCategories.indexOf(category) === -1) {
+                removedCategories.push(category);
+            }
+        });
+
+        subCategories.forEach(category => {
+            if (originalSubCategoriesNames.indexOf(category) === -1) {
+                addedCategories.push(category);
+            }
+        });
+        const payload = {
+            mainCategoryId,
+            removedCategories,
+            addedCategories
+        }
+        setOpen(false);
+        dispatch(editSubCategoriesToMain(payload));
+        dispatch(fetchAllCategories());
     };
 
     const handleNewMainCategory = (newCategory) => {
@@ -59,7 +82,6 @@ const Categories = (props) => {
 
     const handleDeleteMainCategories = () => {
         const categoriesIds = Array.from(selectedMainCategories, category => category.main_category_id);
-        console.log(categoriesIds);
         dispatch(deleteMainCategories(categoriesIds));
         setSelectedMainCategories([]);
     };

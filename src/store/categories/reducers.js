@@ -61,6 +61,22 @@ const reducer = (state = initialState,  action) => {
                 mainCategories: action.payload
             }
         }
+        case actionTypes.EDIT_SUB_CATEGORIS_TO_MAIN: {
+            return {
+                ...state,
+                loading: true,
+                hasError: false
+            }
+        }
+        case actionTypes.EDIT_SUB_CATEGORIS_TO_MAIN_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                hasError: false,
+                mainCategories: action.payload.main,
+                subCategories:action.payload.sub
+            }
+        }
         default:{
             return state;
         }

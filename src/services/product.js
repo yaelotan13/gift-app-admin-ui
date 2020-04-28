@@ -45,6 +45,7 @@ export const addSubCategories = async (productId, subCategories) => {
 };
 
 export const addMainCategories = async (productId, mainCategories) => {
+    // let mainCategoriesIds = Array.from(mainCategories, category => category.main_category_id);
     await axios.post(`${categoriesUrl}?product_id=${productId}`, {
         main_categories: mainCategories
     });
@@ -52,12 +53,24 @@ export const addMainCategories = async (productId, mainCategories) => {
     return await getCategories(productId);
 };
 
-export const updateProductInfo = async (productId, updatedInfo) => {
+export const updateProductInfo = async (productId, updatedProduct) => {
     await axios.put(`${productUrl}?product_id=${productId}`, {
-        updated_product: updatedInfo
+        updated_product: updatedProduct
     });
 
-    return await getProductInfo(productId);
+    await getProductInfo(productId);
+    if (updatedProduct.addedMainCategories.length > 0) {
+        await addMainCategories(productId, updatedProduct.addedMainCategories);
+    }
+    if (updatedProduct.removedMainCategories.length > 0) {
+        await deleteMainCategoriesFromProduct(productId, updatedProduct.removedMainCategories);
+    }
+    if (updatedProduct.addedSubCategories.length > 0) {
+        await addSubCategories(productId, updatedProduct.addedSubCategories);
+    }
+    if (updatedProduct.removedSubCategories.length > 0) {
+        await deleteSubCategoriesFromProduct(productId, updatedProduct.removedSubCategories);
+    }
 };
 
 const getFormData = (product) => {
@@ -80,12 +93,12 @@ export const addNewProduct = async (newProduct) => {
     const response = await axios.post(productUrl, product, config);
 
     const newProductId = response.data.productId;
-    if (newProduct.subCategories.length > 0) {
-        const subCategoriesIds = newProduct.subCategories.map(category => category.sub_category_id);
-        await addSubCategories(newProductId, subCategoriesIds);
+    if (newProduct.addedMainCategories.length > 0) {
+        console.log(newProduct.addedMainCategories);
+        await addMainCategories(newProductId, newProduct.addedMainCategories);
     }
-    if (newProduct.mainCategories.length > 0) {
-        const mainCategoriesIds = newProduct.mainCategories.map(category => category.main_category_id);
-        await addMainCategories(newProductId, mainCategoriesIds);
+    if (newProduct.addedSubCategories.length > 0) {
+        console.log(newProduct.addedSubCategories);
+        await addSubCategories(newProductId, newProduct.addedSubCategories);
     }
 };

@@ -6,9 +6,9 @@ const useStyles = makeStyles({
     buttonContainer: {
         display: 'flex',
         justifyContent: 'center',
-        marginTop: '3vh',
+        marginTop: '2vh',
         position: 'absolute',
-        bottom: '3vh'
+        bottom: '5vh'
     },
     button: {
       width: '12vw',

@@ -159,7 +159,7 @@ const reducer = (state = initialState, action) => {
                 productId: null, 
                 productName: '',
                 store: '',
-                price: null,
+                price: '',
                 link: '', 
                 productImage: '',
                 subCategories: [],

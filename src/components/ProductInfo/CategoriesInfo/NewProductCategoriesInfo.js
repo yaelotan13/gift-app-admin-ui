@@ -7,6 +7,8 @@ import useSelector from '../../../hooks/useSelctor';
 import { mainCategoriesSlector, subCategoriesSlector } from '../../../store/selectors/categories';
 import { productCategoriesSelector } from '../../../store/selectors/product';
 import { storeMainCategories, storeSubCategories } from '../../../store/product/actions';
+import { MainCategoriesList } from '../../../views/Categories/components';
+import { AllCategoriesView } from '../CategoriesInfo/Categories/CategoriesList';
 
 const useStyles = makeStyles({
     root: {
@@ -31,51 +33,53 @@ const getCategories = (allCategories, newCategorisId, prefix) => {
 
 const NewProductCategoriesInfo = (props) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { productId } = props;
-    const mainCategoriesState = useSelector(mainCategoriesSlector);
-    const subCategoriesState = useSelector(subCategoriesSlector);
-    const productCategoriesState = useSelector(productCategoriesSelector);
-    const { mainCategories: productMainCategories, subCategories: productSubCategories } = { ...productCategoriesState };
-    console.log('NewProductCategoriesInfo');
-    const deleteMainCategories = (selectedCategories) => {
+    // const dispatch = useDispatch();
+    // const mainCategoriesState = useSelector(mainCategoriesSlector);
+    // const subCategoriesState = useSelector(subCategoriesSlector);
+    // const productCategoriesState = useSelector(productCategoriesSelector);
+    // const { mainCategories: productMainCategories, subCategories: productSubCategories } = { ...productCategoriesState };
+    const { toggleSubCategorySelected, selectedCategories } = props;
+    
+    // const deleteMainCategories = (selectedCategories) => {
         
-    };
+    // };
 
-    const deleteSubCategories = (selectedCategories) => {
+    // const deleteSubCategories = (selectedCategories) => {
         
-    };
+    // };
 
-    const addSubCategories = (subCategories) => {
-        const newCategories = getCategories(subCategoriesState, subCategories, 'sub');
-        const categories = [...productSubCategories, ...newCategories];
-        dispatch(storeSubCategories(categories));
-    };
+    // const addSubCategories = (subCategories) => {
+    //     const newCategories = getCategories(subCategoriesState, subCategories, 'sub');
+    //     const categories = [...productSubCategories, ...newCategories];
+    //     dispatch(storeSubCategories(categories));
+    // };
 
-    const addMainCategories = (mainCategories) => {
-        const newCategories = getCategories(mainCategoriesState, mainCategories, 'main');
-        const categories = [...productMainCategories, ...newCategories];
-        dispatch(storeMainCategories(categories));
-    };
+    // const addMainCategories = (mainCategories) => {
+    //     const newCategories = getCategories(mainCategoriesState, mainCategories, 'main');
+    //     console.log('in addMainCategories');
+    //     console.log(newCategories);
+    //     const categories = [...productMainCategories, ...newCategories];
+    //     console.log(categories);
+    //     dispatch(storeMainCategories(categories));
+    // };
 
     return (
         <div className={classes.root}>
-            <Categories 
+            <AllCategoriesView toggleSelected={toggleSubCategorySelected} selectedCategories={selectedCategories} />
+            {/* <Categories 
                 type="main"
-                handleDelete={deleteMainCategories}
+                handleDelete={removeMainCategories}
                 handleAdd={addMainCategories}
-                categories={productMainCategories}
+                categories={mainCategories}
                 title="Main Categories"
-                loading={false}
-            />
-            <Categories 
+            /> */}
+            {/* <Categories 
                 type="sub"
-                handleDelete={deleteSubCategories}
+                handleDelete={removeSubCategories}
                 handleAdd={addSubCategories}
-                categories={productSubCategories}
+                categories={subCategories}
                 title="Sub Categories"
-                loading={false}
-            />
+            /> */}
         </div>
     ); 
 };

@@ -5,6 +5,9 @@ import { TextField } from '@material-ui/core';
 import { FileUploader } from '../../../Layout';
 
 const useStyles = makeStyles({
+    price: {
+        width: '10vw'
+    }
 });
 
 const Inputs = (props) => {
@@ -14,7 +17,6 @@ const Inputs = (props) => {
     return (
         <Fragment>
             <TextField 
-                id="standard-basic" 
                 label="Name" 
                 variant="outlined" 
                 name="productName"
@@ -22,7 +24,6 @@ const Inputs = (props) => {
                 onChange={handleChnage}
             />
             <TextField 
-                id="standard-basic" 
                 label="Store" 
                 name="store"
                 variant="outlined" 
@@ -30,15 +31,14 @@ const Inputs = (props) => {
                 onChange={handleChnage}
             />
             <TextField 
-                id="standard-basic" 
                 label="Price" 
                 variant="outlined"
                 name="price" 
                 value={values.price}
                 onChange={handleChnage}
+                className={classes.price}
             />
-            <TextField 
-                id="standard-basic" 
+            <TextField  
                 label="Link" 
                 variant="outlined" 
                 name="link"

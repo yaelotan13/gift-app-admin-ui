@@ -38,6 +38,7 @@ const CategoriesInfo = (props) => {
     };
 
     const addMainCategories = (mainCategories) => {
+        console.log(mainCategories);
         dispatch(addMainCategoriesAction(productId, mainCategories));
     };
 

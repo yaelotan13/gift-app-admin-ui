@@ -35,9 +35,10 @@ const Categories = (props) => {
     const [mainCategoriesSelected, setMainCategoriesSelected] = useState([]);
     const [subCategoriesSelected, setSubCategoriesSelected] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
-    console.log(categoriesState);
 
     const handleMainCategorySelected = (category) => {
+        console.log('MAIN CATEGORY ADDED!');
+        console.log(category);
         setMainCategoriesSelected((prevSelected) => {
             return toggleCategory(prevSelected, category);
         })

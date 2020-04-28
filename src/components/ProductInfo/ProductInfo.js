@@ -28,6 +28,7 @@ const useStyles = makeStyles({
         display: 'flex',
         height: '85vh',
         justifyContent: 'flex-start',
+        marginBottom: '-2vh'
     },
     root: {
         display: 'flex',
@@ -86,6 +87,8 @@ const ProductPage = (props) => {
     const [values, setValues] = useState({ ...productInfo });
     const [imgUrl, setImgUrl] = useState(null);
     const [img, setImg] = useState(values.productImage);
+    const [mainCategories, setMainCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
 
     useEffect(() => {
         isAddingNewProduct() ? 
@@ -94,11 +97,40 @@ const ProductPage = (props) => {
         dispatch(fetchProductInfo(productId));
     }, []);
 
+    useEffect(() => {
+        setValues({...productInfo});
+        setImg(productInfo.productImage);
+        setMainCategories([...Array.from(productInfo.subCategories, category => category.main_category_id)]);
+        setSubCategories([...Array.from(productInfo.subCategories, category => category.sub_category_id)]);
+    }, [productInfo]);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     const isAddingNewProduct = () => history.location.pathname === '/add-product';
+
+    const getAddedMainCategories = () => {
+        const originaMainCategoriesIds = Array.from(productInfo.mainCategories, category => category.main_category_id);
+        const mainCategoriesSet = [...new Set(mainCategories)];
+        return mainCategoriesSet.filter(category => originaMainCategoriesIds.indexOf(category) < 0);
+    };
+
+    const getAddedSubCategories = () => {
+        const originaSubCategoriesIds = Array.from(productInfo.subCategories, category => category.sub_category_id);
+        return subCategories.filter(category => originaSubCategoriesIds.indexOf(category) < 0);
+    };
+
+    const getRemovedMainCategories = () => {
+        const originaMainCategoriesIds = Array.from(productInfo.mainCategories, category => category.main_category_id);
+        const mainCategoriesSet = [...new Set(mainCategories)];
+        return originaMainCategoriesIds.filter(category => mainCategoriesSet.indexOf(category) < 0);
+    };
+
+    const getRemovedSubCategories = () => {
+        const originaSubCategoriesIds = Array.from(productInfo.subCategories, category => category.sub_category_id);
+        return originaSubCategoriesIds.filter(category => subCategories.indexOf(category) < 0);
+    };
 
     const handleChnage = (event) => {
         setValues({
@@ -114,21 +146,39 @@ const ProductPage = (props) => {
     };
 
     const onSubmit = () => {
-        console.log(imgUrl);
-        const currentProduct = {
+        const product = {
             name: values.productName,
             store: values.store,
             price: values.price,
             link: values.link,
             image: img,
-            subCategories: productInfo.subCategories,
-            mainCategories: productInfo.mainCategories
+            addedMainCategories: [...new Set(mainCategories)],
+            addedSubCategories: subCategories,
         };
+        if (isAddingNewProduct()) {
+            dispatch(addNewProduct(product))
+        } else {
+            product.addedMainCategories = getAddedMainCategories();
+            product.removedMainCategories = getRemovedMainCategories();
+            product.addedSubCategories = getAddedSubCategories();
+            product.removedSubCategories = getRemovedSubCategories();
+            dispatch(updateProductInfo(productId, product))
+        }
+    };
 
-        isAddingNewProduct() ? 
-        dispatch(addNewProduct(currentProduct))
-        :
-        dispatch(updateProductInfo(productId, currentProduct))
+    const handleToggleSubCategory = (subCategory, mainCategory) => {
+        if (subCategories.indexOf(subCategory) === -1) {
+            setSubCategories(prevState => [...prevState, subCategory]);
+            setMainCategories(prevState => [...prevState, mainCategory]);
+        } else {
+            setSubCategories(prevState => prevState.filter(category => category !== subCategory));
+            setMainCategories(prevState => {
+                const index = prevState.indexOf(mainCategory);
+                const newState = [...prevState];
+                newState.splice(index, 1);
+                return newState;
+            });
+        }
     };
 
     const updateSuccess = () => {
@@ -178,7 +228,10 @@ const ProductPage = (props) => {
                                     />
                                 </TabPanel>
                                 <TabPanel value={value} index={1}>
-                                    {isAddingNewProduct() ? <NewProductCategoriesInfo /> : <CategoriesInfo productId={productId} />}
+                                    <NewProductCategoriesInfo 
+                                        toggleSubCategorySelected ={handleToggleSubCategory}
+                                        selectedCategories={subCategories}
+                                    />
                                 </TabPanel>
                             </Box>
                         }

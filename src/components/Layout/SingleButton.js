@@ -7,11 +7,9 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         marginTop: '2vh',
-        position: 'absolute',
-        bottom: '5vh'
     },
     button: {
-      width: '12vw',
+      width: '6vw',
     }
 });
 

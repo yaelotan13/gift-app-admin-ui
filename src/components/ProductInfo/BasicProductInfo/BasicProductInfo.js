@@ -8,12 +8,7 @@ import { WithCenter } from '../../../hocs';
 
 const useStyles = makeStyles({
     form: {
-        width: '50vw',
         marginLeft: '3vw',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        height: '65vh',
     },
 });
 

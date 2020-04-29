@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         flexWrap: 'wrap'
     },
     card: {
-        width: '25vw',
+        width: '35vw',
         marginBottom: '2vh',
         marginLeft: '3vw',
     },

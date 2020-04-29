@@ -10,8 +10,8 @@ const useStyles = makeStyles({
     },
     img: {
         marginTop: '1vh',
-        width: '12vw',
-        height: '15vh',
+        width: '15vw',
+        height: '18vh',
         border: `1px solid ${grey[300]}`,
         borderRadius: 5,
     },

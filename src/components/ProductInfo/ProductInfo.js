@@ -27,19 +27,13 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
     },
-    center: {
-        height: '50vh',
-        width: '100vw',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     tabs: {
         borderRight: '1px solid grey',
     },
     buttonContainer: {
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
+        width: '60vw',
         marginTop: '3vh'
     },
     button: {
@@ -189,6 +183,9 @@ const ProductPage = (props) => {
 
     return (
         <div className={classes.root}>
+            <Box className={classes.buttonContainer}>
+                <SingleButton onSubmit={onSubmit} buttonTitle={buttonTitle} variant="contained" />
+            </Box>
             <div className={classes.tabsWrapper}>
                 {
                     productInfo.updateSuccess ? 
@@ -227,9 +224,6 @@ const ProductPage = (props) => {
                     </Fragment>
                 }
             </div>
-            <WithCenter>
-                <SingleButton onSubmit={onSubmit} buttonTitle={buttonTitle} variant="contained" />
-            </WithCenter>
         </div>
     )
 };

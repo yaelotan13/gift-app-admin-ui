@@ -4,8 +4,6 @@ import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
     center: {
-        height: '80vh',
-        width: '80vw',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

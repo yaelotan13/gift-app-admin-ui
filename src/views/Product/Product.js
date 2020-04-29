@@ -10,7 +10,6 @@ import ProductPageHeader from './ProductPageHeader';
 const useStyles = makeStyles({
     root: {
         marginLeft: 240,
-        height: '100vh',
         padding: '3vh'
     },
     center: {

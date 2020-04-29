@@ -10,7 +10,8 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'space-around',
         height: '40vh',
-        marginBottom: '3vh'
+        marginBottom: '3vh',
+        minWidth: '45vw'
     },
     price: {
         width: '10vw'

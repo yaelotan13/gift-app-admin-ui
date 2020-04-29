@@ -22,6 +22,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
                 hasError: false,
+                updateSuccess: false,
             }
         }
         case actionTypes.FETCH_PRODUCT_INFO_SUCCESS: {
@@ -35,14 +36,16 @@ const reducer = (state = initialState, action) => {
                 link: action.payload.link,
                 productImage: action.payload.product_image,
                 mainCategories: action.payload.main,
-                subCategories: action.payload.sub
+                subCategories: action.payload.sub,
+                updateSuccess: false
             }
         }
         case actionTypes.FETCH_FAILURE : {
             return {
                 ...state,
                 loading: false,
-                hasError: true
+                hasError: true,
+                updateSuccess: false
             }
         }
         case actionTypes.DELETE_MAIN_CATEGORIES_FROM_PRODUCT: {
@@ -58,7 +61,8 @@ const reducer = (state = initialState, action) => {
                 ...state, 
                 loading: true,
                 hasError: false,
-                deleteSuccess: false
+                deleteSuccess: false,
+                updateSuccess: false
             }
         }
         case actionTypes.DELETE_MAIN_CATEGORIES_FROM_PRODUCT_SUCCESS: {
@@ -84,6 +88,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 hasError: false,
+                updateSuccess: false
             }
         }
         case actionTypes.FETCH_PRODUCT_CATEGORIES_SUCCESS: {
@@ -92,7 +97,8 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 hasError: false,
                 mainCategories: action.payload.main,
-                subCategories: action.payload.sub
+                subCategories: action.payload.sub,
+                updateSuccess: false
             }
         }
         case actionTypes.ADD_SUB_CATEGORIES_TO_PRODUCT: {
@@ -164,6 +170,7 @@ const reducer = (state = initialState, action) => {
                 productImage: '',
                 subCategories: [],
                 mainCategories: [],
+                updateSuccess: false
             }
         }
         case actionTypes.STORE_PRODUCT_INFO: {

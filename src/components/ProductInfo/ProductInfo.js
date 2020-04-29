@@ -34,7 +34,6 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'flex-end',
         width: '60vw',
-        marginTop: '3vh'
     },
     button: {
       width: '12vw',

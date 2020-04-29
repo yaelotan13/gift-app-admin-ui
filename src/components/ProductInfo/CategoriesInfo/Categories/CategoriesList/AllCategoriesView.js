@@ -68,6 +68,19 @@ const ExpansionPanelSummary = withStyles({
     expanded: {},
   })(MuiExpansionPanelSummary);
 
+const compare = (a, b) => {
+    const categoryA = a.sub_category_name.toUpperCase();
+    const categoryB = b.sub_category_name.toUpperCase();
+
+    let comparison = 0;
+    if (categoryA > categoryB) {
+        comparison = 1;
+    } else if (categoryA < categoryB) {
+        comparison = -1;
+    }
+    return comparison;
+};
+
 const AllCategoriesView = (props) => {
     const classes = useStyles();
     const categoriesState = useSelector(categoriesSlector);
@@ -79,9 +92,7 @@ const AllCategoriesView = (props) => {
         subCategories = categoriesState.subCategories;
     }, [categoriesState]);
 
-    const getSubCategories = (mainCategoryId) => {
-        return subCategories.filter(category => category.main_category_id === mainCategoryId);
-    };
+    const getSubCategories = mainCategoryId => subCategories.filter(category => category.main_category_id === mainCategoryId).sort(compare);
 
     return (
         <Box className={classes.conatainer}>

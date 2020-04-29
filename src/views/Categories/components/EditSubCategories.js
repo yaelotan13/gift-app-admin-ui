@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import useSelector from '../../../hooks/useSelctor';
 import { subCategoriesSlector } from '../../../store/selectors/categories';
 import EditSubCategoriesHeader from './EditSubCategoriesHeader';
 import SubCategoryList from './SubCategoriesList';
-import AllSubCategories from './AllSubCategories';
-import { Prompt, ActionButtons } from '../../../components/Layout';
+import { ActionButtons } from '../../../components/Layout';
 import Input from './Input';
-import { CenteredSpinner } from '../../../components/Layout';
 
 const filteredSubCategories = (subCategories, mainCategoryId) => 
     subCategories.filter((category) => category.main_category_id === mainCategoryId);
@@ -48,7 +45,6 @@ const EditSubCategories = (props) => {
     const allsubCategories = useSelector(subCategoriesSlector);
     const filteredCategories = filteredSubCategories(allsubCategories, categoryId);
     const [categories, setCategories] = useState([...filteredCategories]);
-    const [open, setOpen] = useState(false);
     const { handleCancel, handleEdit } = props;
 
     const handleDelete = (subCategoryId) => {
@@ -56,11 +52,6 @@ const EditSubCategories = (props) => {
             prevCategories.filter((category) =>
                 category.sub_category_id !== subCategoryId)
         )
-    };
-
-    const handleAction = (categoriesSelected) => {
-        setCategories((prevCategories) => [...prevCategories, ...categoriesSelected]);
-        setOpen(false);
     };
 
     const handleNewSubCategory = (newCategory) => {
@@ -74,14 +65,6 @@ const EditSubCategories = (props) => {
     
     return (
         <Box className={classes.root}>
-            <Prompt     
-                title='Add sub categories'
-                onCancel={() => setOpen(false)}
-                open={open}
-                large
-            >
-                <AllSubCategories categories={allsubCategories} handleCancel={() => setOpen(false)} handleAction={handleAction} />
-            </Prompt>
             <EditSubCategoriesHeader categoryImage={categoryImage} categoryName={categoryName} />
             <Input onSubmit={handleNewSubCategory} />
             <SubCategoryList categories={categories} handleDelete={handleDelete} />

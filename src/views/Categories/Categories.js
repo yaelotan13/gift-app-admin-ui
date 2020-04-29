@@ -44,25 +44,16 @@ const Categories = (props) => {
     const handleEdit = (mainCategoryId, subCategories) => {
         const originalSubCategories = categoriesState.subCategories.filter(category => category.main_category_id === mainCategoryId);
         const originalSubCategoriesNames = Array.from(originalSubCategories, category => category.sub_category_name);
-        const removedCategories = [];
-        const addedCategories = [];
+        const removedCategories = originalSubCategoriesNames.filter(category => subCategories.indexOf(category) < 0);
+        const addedCategories = subCategories.filter(category => originalSubCategoriesNames.indexOf(category) < 0);
 
-        originalSubCategoriesNames.forEach(category => {
-            if (subCategories.indexOf(category) === -1) {
-                removedCategories.push(category);
-            }
-        });
-
-        subCategories.forEach(category => {
-            if (originalSubCategoriesNames.indexOf(category) === -1) {
-                addedCategories.push(category);
-            }
-        });
         const payload = {
             mainCategoryId,
             removedCategories,
             addedCategories
         }
+
+        console.log(payload);
         setOpen(false);
         dispatch(editSubCategoriesToMain(payload));
         dispatch(fetchAllCategories());

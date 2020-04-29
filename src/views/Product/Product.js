@@ -1,12 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import {
-    Box,
-    Typography,
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
-import { ProductPage } from '../../components';
+import ProductPage from '../../components/ProductInfo/ProductInfo';
 import { WithMenu } from '../../hocs';
 import ProductPageHeader from './ProductPageHeader';
 

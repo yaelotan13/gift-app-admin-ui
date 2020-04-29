@@ -2,18 +2,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import { 
-    Tab,
-    Tabs,
-    Box,
-    Typography,
-    Button
-} from '@material-ui/core';
+import { Tab,Tabs,Box, Typography } from '@material-ui/core';
 import { Checkmark } from 'react-checkmark';
 
 import BasicProductInfo from './BasicProductInfo';
-import CategoriesInfo from './CategoriesInfo';
-import NewProductCategoriesInfo from './CategoriesInfo/NewProductCategoriesInfo';
 import { CenteredSpinner } from '../Layout';
 import useSelector from '../../hooks/useSelctor';
 import { productSlector } from '../../store/selectors/product';
@@ -21,6 +13,7 @@ import { fetchProductInfo, clearProductInfo,updateProductInfo, addNewProduct } f
 import { fetchAllProducts } from '../../store/products/actions';
 import { WithCenter } from '../../hocs';
 import { SingleButton } from '../../components/Layout';
+import { AllCategoriesView } from '../ProductInfo/CategoriesInfo/Categories/CategoriesList';
 
 const useStyles = makeStyles({
     tabsWrapper: {
@@ -224,14 +217,10 @@ const ProductPage = (props) => {
                                         onFileChange={onFileChange}
                                         handleChnage={handleChnage}
                                         imgUrl={imgUrl}
-                                        // updateSuccessful={productInfo.updateSuccess}
                                     />
                                 </TabPanel>
                                 <TabPanel value={value} index={1}>
-                                    <NewProductCategoriesInfo 
-                                        toggleSubCategorySelected ={handleToggleSubCategory}
-                                        selectedCategories={subCategories}
-                                    />
+                                    <AllCategoriesView toggleSelected={handleToggleSubCategory} selectedCategories={subCategories} />
                                 </TabPanel>
                             </Box>
                         }

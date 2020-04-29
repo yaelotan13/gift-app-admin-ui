@@ -8,6 +8,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: '-3vh'
     },
     separator: {
         width: '2vh'

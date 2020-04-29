@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Chip } from '@material-ui/core';
 
 import useSelector from '../../../hooks/useSelctor';
 import { productCategoriesSelector } from '../../../store/selectors/product';
@@ -11,6 +11,7 @@ import { fetchProductInfo } from '../../../store/product/actions';
 import { CategoriesList, CategoriesAvatarList } from '../../ProductInfo/CategoriesInfo/Categories/CategoriesList';
 import { ListDialog } from '../../Layout';
 import { ActionButtons } from '../../Layout';
+import { SubCategoriesList } from '../../../views/Categories/components';
 
 const useStyles = makeStyles({
     mainCategoryHeader: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles({
         display: 'flex',
         flexWrap: 'warp',
     },
+    buttonsCaintainer: {
+        marginTop: '6vh'
+    }
 });
 
 const CategoryDialog = (props) => {
@@ -55,9 +59,11 @@ const CategoryDialog = (props) => {
             <CategoriesAvatarList mainCategories={mainCategories} selectable={false} />
             <Typography variant="body1" className={classes.subCtegoryHeader}>Sub Categories</Typography>
             <Box className={classes.subCategoriesContainer}>
-                <CategoriesList type="sub" categories={subCategories} categoriesSelected={[]}/>
+                <SubCategoriesList categories={subCategories} />
             </Box>
-            <ActionButtons onCancel={onClose} onAction={handleEdit} action='Edit'/>
+            <Box className={classes.buttonsCaintainer}>
+                <ActionButtons onCancel={onClose} onAction={handleEdit} action='Edit'/>
+            </Box>
         </ListDialog>
     );
 };

@@ -4,7 +4,7 @@ import { Box, Chip } from '@material-ui/core';
 
 const useStyles = makeStyles({
     container: {
-        marginTop: '3vh',
+        // marginTop: '3vh',
         display: 'flex',
         flexWrap: 'wrap'
     },
@@ -23,7 +23,7 @@ const SubCategoriesList = (props) => {
                 <Chip 
                     variant="outlined" 
                     color="primary" 
-                    onDelete={() => handleDelete(category.sub_category_id)} 
+                    onDelete={handleDelete ? () => handleDelete(category.sub_category_id) : null} 
                     label={category.sub_category_name} 
                     className={classes.chip}
                 />

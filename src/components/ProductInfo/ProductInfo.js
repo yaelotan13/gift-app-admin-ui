@@ -11,7 +11,6 @@ import useSelector from '../../hooks/useSelctor';
 import { productSlector } from '../../store/selectors/product';
 import { fetchProductInfo, clearProductInfo,updateProductInfo, addNewProduct } from '../../store/product/actions';
 import { fetchAllProducts } from '../../store/products/actions';
-import { WithCenter } from '../../hocs';
 import { SingleButton } from '../../components/Layout';
 import { AllCategoriesView } from '../ProductInfo/CategoriesInfo/Categories/CategoriesList';
 
@@ -37,6 +36,13 @@ const useStyles = makeStyles({
     },
     button: {
       width: '12vw',
+    },
+    checkmarkWrapper: {
+        width: '80vh',
+        width: '80vw',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
@@ -174,9 +180,9 @@ const ProductPage = (props) => {
         }, 2000);
 
         return (
-            <WithCenter>
+            <Box className={classes.checkmarkWrapper}>
                 <Checkmark />
-            </WithCenter>
+            </Box>
         );
     };
 

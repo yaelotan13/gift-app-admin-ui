@@ -19,7 +19,8 @@ const useStyles = makeStyles({
         maxWidth: '80vw',
         margin: '5vh auto'
     },
-    row: {
+    productName: {
+        maxWidth: '15vw',
     },
     actions: {
         display: 'flex',
@@ -64,7 +65,7 @@ const ProductsTable = (props) => {
                             <TableCell>
                                 <Avatar alt="product image" src={product.product_image} />
                             </TableCell>
-                            <TableCell>{product.product_name}</TableCell>
+                            <TableCell className={classes.productName}>{product.product_name}</TableCell>
                             <TableCell>{product.store}</TableCell>
                             <TableCell>{product.price}</TableCell>
                             <TableCell>

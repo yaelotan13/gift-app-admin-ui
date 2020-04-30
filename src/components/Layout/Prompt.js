@@ -16,10 +16,10 @@ const useStyles = makeStyles({
         justifyContent: 'center',
     },
     meduim: {
-        height: '50vh',
+        height: '60vh',
     },
     large: {
-        height: '75vh',
+        height: '85vh',
     }
 });
 

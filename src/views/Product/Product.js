@@ -26,8 +26,8 @@ const Product = ({ location, title, buttonTitle }) => {
 
     return (
         <Box className={classes.root}>
-            <ProductPageHeader title={title} />
-            <ProductPage productId={productId} buttonTitle={buttonTitle} />           
+            {/* <ProductPageHeader title={title} /> */}
+            <ProductPage productId={productId} buttonTitle={buttonTitle} title={title} />           
         </Box>
     );
 };

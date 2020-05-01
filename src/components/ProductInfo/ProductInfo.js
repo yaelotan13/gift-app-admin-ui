@@ -13,6 +13,7 @@ import { fetchProductInfo, clearProductInfo,updateProductInfo, addNewProduct } f
 import { fetchAllProducts } from '../../store/products/actions';
 import { SingleButton } from '../../components/Layout';
 import { AllCategoriesView } from '../ProductInfo/CategoriesInfo/Categories/CategoriesList';
+import ProductSummary from './ProductSummary';
 
 const useStyles = makeStyles({
     tabsWrapper: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles({
         marginBottom: '-2vh'
     },
     root: {
+        marginTop: '3vh',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -31,8 +33,9 @@ const useStyles = makeStyles({
     },
     buttonContainer: {
         display: 'flex',
-        justifyContent: 'flex-end',
-        width: '60vw',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80vw',
     },
     button: {
       width: '12vw',
@@ -74,7 +77,7 @@ const ProductPage = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [value, setValue] = useState(0);
-    const { productId, buttonTitle, history } = props;
+    const { productId, buttonTitle, history, title } = props;
     const productInfo = useSelector(productSlector);
     const [values, setValues] = useState({ ...productInfo });
     const [imgUrl, setImgUrl] = useState(null);
@@ -189,6 +192,7 @@ const ProductPage = (props) => {
     return (
         <div className={classes.root}>
             <Box className={classes.buttonContainer}>
+                <Typography variant="h5">{title}</Typography>
                 <SingleButton onSubmit={onSubmit} buttonTitle={buttonTitle} variant="contained" />
             </Box>
             <div className={classes.tabsWrapper}>
@@ -206,7 +210,8 @@ const ProductPage = (props) => {
                             className={classes.tabs}
                         >
                             <Tab label="Info" {...a11yProps(0)} />
-                            <Tab label="Categories" {...a11yProps(1)} />
+                            {/* {!isAddingNewProduct() && <Tab label="Categories" {...a11yProps(2)} />}  */}
+                            <Tab label="Add Categories" {...a11yProps(1)} />
                         </Tabs>
                         {
                             productInfo.loading ?
@@ -221,6 +226,10 @@ const ProductPage = (props) => {
                                         imgUrl={imgUrl}
                                     />
                                 </TabPanel>
+                                {/* {!isAddingNewProduct() &&  
+                                    <TabPanel value={value} index={2}>
+                                        <ProductSummary name={values.productName} img={img} handleDelete={() => {}} productInfo={productInfo} />
+                                    </TabPanel>} */}
                                 <TabPanel value={value} index={1}>
                                     <AllCategoriesView toggleSelected={handleToggleSubCategory} selectedCategories={subCategories} />
                                 </TabPanel>

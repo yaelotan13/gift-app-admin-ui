@@ -6,11 +6,13 @@ import rootSaga from './sages';
 import categoryReducer from './categories/reducers';
 import productsReducer from './products/reducer';
 import productReducer from './product/reducer';
+import userReducer from './user/reducer';
 
 const rootReducer = combineReducers({
     categories: categoryReducer, 
     products: productsReducer,
-    product: productReducer
+    product: productReducer,
+    user: userReducer,
 });
 
 export const browserHistory = createBrowserHistory();

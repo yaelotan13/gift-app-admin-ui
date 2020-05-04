@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
@@ -34,7 +34,6 @@ const Categories = (props) => {
     const [category, setCategory] = useState(null);
     const [selectedMainCategories, setSelectedMainCategories] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
-    console.log(categoriesState);
 
     const handleCategoryClick = (category) => {
         setCategory(category);
@@ -56,7 +55,7 @@ const Categories = (props) => {
         console.log(payload);
         setOpen(false);
         dispatch(editSubCategoriesToMain(payload));
-        dispatch(fetchAllCategories());
+        dispatch(fetchAllCategories()); // Check
     };
 
     const handleNewMainCategory = (newCategory) => {

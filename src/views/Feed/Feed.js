@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
@@ -45,7 +45,7 @@ const Feed = (props) => {
     const [selectedProducts, setSelectedProducts] = useState([]);
     const productsState = useSelector(productsSlector);
     const filteredProducts = useSelector(filteredProductsSelector);
-    
+
     const handleShowCategories = (product) => {
         setProduct(product);
         setOpenCategoryDialog(true);

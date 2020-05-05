@@ -13,7 +13,6 @@ import { fetchProductInfo, clearProductInfo,updateProductInfo, addNewProduct } f
 import { fetchAllProducts } from '../../store/products/actions';
 import { SingleButton } from '../../components/Layout';
 import { AllCategoriesView } from '../ProductInfo/CategoriesInfo/Categories/CategoriesList';
-import ProductSummary from './ProductSummary';
 
 const useStyles = makeStyles({
     tabsWrapper: {
@@ -210,7 +209,6 @@ const ProductPage = (props) => {
                             className={classes.tabs}
                         >
                             <Tab label="Info" {...a11yProps(0)} />
-                            {/* {!isAddingNewProduct() && <Tab label="Categories" {...a11yProps(2)} />}  */}
                             <Tab label="Add Categories" {...a11yProps(1)} />
                         </Tabs>
                         {
@@ -218,7 +216,7 @@ const ProductPage = (props) => {
                             <CenteredSpinner />
                             :
                             <Box>
-                                <TabPanel value={value} index={0}>
+                                <TabPanel value={value} index={0} key={0}>
                                     <BasicProductInfo 
                                         productInfo={values}
                                         onFileChange={onFileChange}
@@ -226,11 +224,7 @@ const ProductPage = (props) => {
                                         imgUrl={imgUrl}
                                     />
                                 </TabPanel>
-                                {/* {!isAddingNewProduct() &&  
-                                    <TabPanel value={value} index={2}>
-                                        <ProductSummary name={values.productName} img={img} handleDelete={() => {}} productInfo={productInfo} />
-                                    </TabPanel>} */}
-                                <TabPanel value={value} index={1}>
+                                <TabPanel value={value} index={1} key={1}>
                                     <AllCategoriesView toggleSelected={handleToggleSubCategory} selectedCategories={subCategories} />
                                 </TabPanel>
                             </Box>

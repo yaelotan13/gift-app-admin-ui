@@ -86,7 +86,7 @@ const AllCategoriesView = (props) => {
     const categoriesState = useSelector(categoriesSlector);
     let { mainCategories, subCategories } = {...categoriesState};
     const { toggleSelected, selectedCategories } = props;
-    
+
     useEffect(() => {
         mainCategories = categoriesState.mainCategories;
         subCategories = categoriesState.subCategories;

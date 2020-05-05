@@ -13,6 +13,7 @@ import ProductTable from './ProductsTable';
 import ProductsHeader from './ProductsHeader';
 import Search from './Search';
 import { fetchAllProducts, deleteProduct as deleteProductAction, seatchProducts } from '../../store/products/actions';
+import { fetchAllCategories } from '../../store/categories/actions';
 import { Prompt, ActionButtons } from '../../components/Layout';
 
 const useStyles = makeStyles({
@@ -49,6 +50,7 @@ const Feed = (props) => {
 
     useEffect(() => {
         dispatch(fetchAllProducts());
+        dispatch(fetchAllCategories());
     }, []);
     
     const handleShowCategories = (product) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Box, TextField, Button, Typography } from '@material-ui/core';
+import { Box, TextField, Button, Typography, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
     container: {
@@ -16,9 +16,14 @@ const useStyles = makeStyles({
     error: {
         color: 'red'
     },
+    buttonContainer: {
+        display: 'flex',
+        marginTop: '8vh',
+        alignItems: 'center',
+    },
     button: {
-        marginTop: '8vh'
-    }
+        marginRight: '2vw'
+    },
 });
 
 const Inputs = (props) => {
@@ -26,7 +31,7 @@ const Inputs = (props) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [editing, setEditing] = useState(false);
-    const { handelSubmit, hasError } = props;
+    const { handelSubmit, hasError, loading } = props;
 
     const onSubmit = () => {
         setEditing(false);
@@ -58,14 +63,17 @@ const Inputs = (props) => {
                 onChange={handlePasswordChanged}
             />
             {hasError && !editing && <Typography className={classes.error} variant="body2">Incorrect password</Typography>}
-            <Button 
-                onClick={onSubmit}
-                variant="contained"
-                color="primary"
-                className={classes.button}
-            >
-                Let Me In
-            </Button>
+            <Box className={classes.buttonContainer}>
+                <Button 
+                    onClick={onSubmit}
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                >
+                    Let Me In
+                </Button>
+                {loading && <CircularProgress size={20} />}
+            </Box>
         </Box>
     );
 };

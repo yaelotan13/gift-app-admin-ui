@@ -19,7 +19,8 @@ const useStyles = makeStyles({
     container: {
         height: '95vh',
         marginLeft: 240,
-        padding: '30px'
+        padding: '30px',
+        marginTop: 40
     },
     center: {
         display: 'flex',
@@ -46,6 +47,10 @@ const Feed = (props) => {
     const productsState = useSelector(productsSlector);
     const filteredProducts = useSelector(filteredProductsSelector);
 
+    useEffect(() => {
+        dispatch(fetchAllProducts());
+    }, []);
+    
     const handleShowCategories = (product) => {
         setProduct(product);
         setOpenCategoryDialog(true);

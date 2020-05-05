@@ -4,8 +4,10 @@ import { takeLatest } from 'redux-saga/effects'
 import * as categoriesActionTypes from '../categories/actionTypes';
 import * as productsActionTypes from '../products/actionTypes';
 import * as productActionTypes from '../product/actionTypes';
+import * as userActionTypes from '../user/actionTypes';
 
 import { 
+    LogIn,
     FetchAllProducts, 
     FetchProductInfo, 
     DeleteMainCategoriesFromProduct,
@@ -19,9 +21,10 @@ import {
     AddMainCategories,
     DeleteMainCategories,
     EditSubCategoriesToMain
-} from './api'; // TODO - Upper case ?
+} from './api'; 
 
 function* rootSaga() {
+    yield takeLatest(userActionTypes.LOG_IN, LogIn);
     yield takeLatest(productsActionTypes.FETCH_ALL_PRODUCTS, FetchAllProducts);
     yield takeLatest(productActionTypes.FETCH_PRODUCT_INFO, FetchProductInfo);
     yield takeLatest(productActionTypes.DELETE_SUB_CATEGORIES_FROM_PRODUCT, DeleteSubCategoriesFromProduct);

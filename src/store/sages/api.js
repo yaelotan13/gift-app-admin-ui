@@ -3,7 +3,22 @@ import { call, put } from "@redux-saga/core/effects";
 import * as categoriesActionTypes from '../categories/actionTypes';
 import * as productsActionsTypes from '../products/actionTypes';
 import * as productActionsTypes from '../product/actionTypes';
-import { categoriesService, productService, productsService } from '../../services';
+import * as userActionTypes from '../user/actionTypes';
+import { categoriesService, productService, productsService, userService } from '../../services';
+
+export function* LogIn(action) {
+    console.log('in log in saga');
+    const passwordIsValid = yield call(userService.isValidpassowrd, action.payload.password);
+    if (passwordIsValid) {
+        yield put({
+            type: userActionTypes.LOG_IN_SUCCESS,
+        })
+    } else {
+        yield put({
+            type: userActionTypes.LOG_IN_FAILURE
+        })
+    }
+};
 
 export function* FetchAllProducts() {
     try {

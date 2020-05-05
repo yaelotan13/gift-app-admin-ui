@@ -35,6 +35,10 @@ const Categories = (props) => {
     const [selectedMainCategories, setSelectedMainCategories] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
 
+    useEffect(() => {
+        dispatch(fetchAllCategories());
+    }, []);
+
     const handleCategoryClick = (category) => {
         setCategory(category);
         setOpen(true);

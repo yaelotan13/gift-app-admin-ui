@@ -1,12 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, AppBar, Typography } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import CategoryIcon from '@material-ui/icons/Category';
 import RedeemIcon from '@material-ui/icons/Redeem';
 import { Link } from 'react-router-dom';
 
+import WelcomeUser from './WelcomeUser';
+
 const useStyles = makeStyles({
+    appBar: {
+        backgroundColor: '#fafafa',
+        height: '4vh'
+    },
     drawer: {
         width: 240
     },
@@ -52,26 +58,29 @@ const Menu = (props) => {
             }
         }
     }
-    return (
-        <Drawer
-            className={classes.drawer}
-            variant="permanent"
-            classes={{
-            paper: classes.drawerPaper,
-            }}
-            anchor="left"
-        >
-            <List className={classes.list}>
-            {['Home', 'New Product', 'Categories'].map((text, index) => (
-                <Link to={getPath(index)} className={classes.link}>
-                    <ListItem button key={text}>
-                        <ListItemIcon>{getIcon(index)}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                </Link>
-            ))}
-            </List>
-        </Drawer>
+    return (     
+        <AppBar position="fixed" className={classes.appBar}>
+            <WelcomeUser userName="Yael" />
+            <Drawer
+                className={classes.drawer}
+                variant="permanent"
+                classes={{
+                paper: classes.drawerPaper,
+                }}
+                anchor="left"
+            >
+                <List className={classes.list}>
+                {['Home', 'New Product', 'Categories'].map((text, index) => (
+                    <Link to={getPath(index)} className={classes.link}>
+                        <ListItem button key={text}>
+                            <ListItemIcon>{getIcon(index)}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    </Link>
+                ))}
+                </List>
+            </Drawer>
+        </AppBar>
     );
 };
 

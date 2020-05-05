@@ -18,12 +18,12 @@ const useStyles = makeStyles({
 
 const Info = (props) => {
     const classes = useStyles();
-    const { handelSubmit, hasError } = props;
+    const { handelSubmit, hasError, loading } = props;
 
     return (
         <Card className={classes.container}>
             <Typography variant="h5">Log In</Typography>
-            <Inputs handelSubmit={handelSubmit} hasError={hasError} />
+            <Inputs handelSubmit={handelSubmit} hasError={hasError} loading={loading} />
         </Card>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-dom';
 import image from '../../assets/images/gifts.jpg';
 import Info from './components/Info';
 import { login } from '../../store/user/actions';
-import { fetchAllProducts } from '../../store/products/actions';
-import { fetchAllCategories } from '../../store/categories/actions';
+import { userSelector } from '../../store/selectors/user';
+import useSelector from '../../hooks/useSelctor';
 
 const useStyles = makeStyles({
     container: {
@@ -31,23 +31,26 @@ const useStyles = makeStyles({
 const Login = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const userState = useSelector(userSelector);
     const [hasError, setHasError] = useState(false);
 
-    const handelSubmit = (name, password) => {
-        if (password === process.env.REACT_APP_PASSWORD) {
-            dispatch(login(name));
-            dispatch(fetchAllProducts());
-            dispatch(fetchAllCategories());
+    useEffect(() => {
+        if (userState.isLoggedIn) {
             props.history.push('/feed');
-        } else {
+        }
+        if (userState.hasError) {
             setHasError(true);
         }
+    }, [userState]);
+
+    const handelSubmit = (name, password) => {
+        dispatch(login(name, password));
     };
 
     return (
         <Box className={classes.container}>
             <Box className={classes.content}>
-                <Info handelSubmit={handelSubmit} hasError={hasError} />
+                <Info handelSubmit={handelSubmit} hasError={hasError} loading={userState.loading} />
             </Box>
             <Box className={classes.image} />
         </Box>

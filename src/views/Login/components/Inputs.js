@@ -61,6 +61,7 @@ const Inputs = (props) => {
                 label="Password" 
                 value={password} 
                 onChange={handlePasswordChanged}
+                data-cy="password-input"
             />
             {hasError && !editing && <Typography className={classes.error} variant="body2">Incorrect password</Typography>}
             <Box className={classes.buttonContainer}>
@@ -69,6 +70,7 @@ const Inputs = (props) => {
                     variant="contained"
                     color="primary"
                     className={classes.button}
+                    data-cy="login-button"
                 >
                     Let Me In
                 </Button>

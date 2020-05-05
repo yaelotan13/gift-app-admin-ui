@@ -34,7 +34,7 @@ const Categories = (props) => {
     const [category, setCategory] = useState(null);
     const [selectedMainCategories, setSelectedMainCategories] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
-
+console.log(categoriesState);
     useEffect(() => {
         dispatch(fetchAllCategories());
     }, []);

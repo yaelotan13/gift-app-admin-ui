@@ -74,7 +74,7 @@ const WelcomeUser = (props) => {
             >
                 <MenuItem onClick={handleLogOut} className={classes.item}>
                     <Typography>Log Out</Typography>
-                    <IconButton onClick={handleLogOut}>
+                    <IconButton onClick={handleLogOut} data-cy="logout-button">
                         <ExitToAppIcon className={classes.exitIcon} />
                     </IconButton>
                 </MenuItem>

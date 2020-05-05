@@ -40,7 +40,7 @@ const ProductsTable = (props) => {
 
     return (
         <TableContainer>
-            <Table className={classes.table}>
+            <Table className={classes.table} data-cy="product-table">
                 <TableHead>
                     <TableRow>
                     <TableCell/>

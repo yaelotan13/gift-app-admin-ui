@@ -1,9 +1,9 @@
 import { productUrl, categoriesUrl } from '../config/serverUrl';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export const getProductInfo = async (productId) => {
-    const productInfo = await axios.get(`${productUrl}?product_id=${productId}`);
-    const categoriesInfo = await axios.get(`${categoriesUrl}?product_id=${productId}`);
+    const productInfo = await axiosInstance.get(`${productUrl}?product_id=${productId}`);
+    const categoriesInfo = await axiosInstance.get(`${categoriesUrl}?product_id=${productId}`);
 
     return {
         ...productInfo.data[0],
@@ -12,12 +12,12 @@ export const getProductInfo = async (productId) => {
 };
 
 const getCategories = async (productId) => {
-    const result = await axios.get(`${categoriesUrl}?product_id=${productId}`);
+    const result = await axiosInstance.get(`${categoriesUrl}?product_id=${productId}`);
     return result.data;
 };
 
 export const deleteMainCategoriesFromProduct = async (productId, mainCategories) => {
-    await axios.delete(`${categoriesUrl}?product_id=${productId}`, {
+    await axiosInstance.delete(`${categoriesUrl}?product_id=${productId}`, {
         data: {
             main_categories: mainCategories
         }
@@ -27,7 +27,7 @@ export const deleteMainCategoriesFromProduct = async (productId, mainCategories)
 };
 
 export const deleteSubCategoriesFromProduct = async (productId, subCategories) => {
-    await axios.delete(`${categoriesUrl}?product_id=${productId}`, {
+    await axiosInstance.delete(`${categoriesUrl}?product_id=${productId}`, {
         data: {
             sub_categories: subCategories
         }
@@ -37,7 +37,7 @@ export const deleteSubCategoriesFromProduct = async (productId, subCategories) =
 };
 
 export const addSubCategories = async (productId, subCategories) => {
-    await axios.post(`${categoriesUrl}?product_id=${productId}`, {
+    await axiosInstance.post(`${categoriesUrl}?product_id=${productId}`, {
         sub_categories: subCategories
     });
 
@@ -45,8 +45,7 @@ export const addSubCategories = async (productId, subCategories) => {
 };
 
 export const addMainCategories = async (productId, mainCategories) => {
-    // let mainCategoriesIds = Array.from(mainCategories, category => category.main_category_id);
-    await axios.post(`${categoriesUrl}?product_id=${productId}`, {
+    await axiosInstance.post(`${categoriesUrl}?product_id=${productId}`, {
         main_categories: mainCategories
     });
 
@@ -54,7 +53,7 @@ export const addMainCategories = async (productId, mainCategories) => {
 };
 
 export const updateProductInfo = async (productId, updatedProduct) => {
-    await axios.put(`${productUrl}?product_id=${productId}`, {
+    await axiosInstance.put(`${productUrl}?product_id=${productId}`, {
         updated_product: updatedProduct
     });
 
@@ -90,7 +89,7 @@ export const addNewProduct = async (newProduct) => {
         headers: { 'Content-Type': 'multipart/form-data' },
     };
 
-    const response = await axios.post(productUrl, product, config);
+    const response = await axiosInstance.post(productUrl, product, config);
 
     const newProductId = response.data.productId;
     if (newProduct.addedMainCategories.length > 0) {

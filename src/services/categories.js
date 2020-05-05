@@ -1,9 +1,9 @@
 import { categoriesUrl } from '../config/serverUrl';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export const getAllCategories = async () => {
-    const mainCategories = await axios.get(`${categoriesUrl}main`);
-    const subCategories = await axios.get(`${categoriesUrl}sub`);
+    const mainCategories = await axiosInstance.get(`${categoriesUrl}main`);
+    const subCategories = await axiosInstance.get(`${categoriesUrl}sub`);
     return {
         main: mainCategories.data,
         sub: subCategories.data
@@ -24,23 +24,23 @@ export const addMainCategory = async (newCategory) => {
         headers: { 'Content-Type': 'multipart/form-data' },
     };
 
-    await axios.post(`${categoriesUrl}main`, category, config);
-    return await axios.get(`${categoriesUrl}main`);
+    await axiosInstance.post(`${categoriesUrl}main`, category, config);
+    return await axiosInstance.get(`${categoriesUrl}main`);
 };
 
 export const deleteMainCategories = async (categories) => {
-    await axios.delete(`${categoriesUrl}main`, {
+    await axiosInstance.delete(`${categoriesUrl}main`, {
         data: {
             main_categories: categories
         }
     });
 
-    return await await axios.get(`${categoriesUrl}main`);
+    return await await axiosInstance.get(`${categoriesUrl}main`);
 };
 
 export const editSubCategoriesToMainCategory = async (subCategoriesInfo) => {
     const { mainCategoryId, removedCategories, addedCategories } = subCategoriesInfo;
-    const result = await axios.post(`${categoriesUrl}sub?mainCategoryId=${mainCategoryId}`, {
+    const result = await axiosInstance.post(`${categoriesUrl}sub?mainCategoryId=${mainCategoryId}`, {
         removedCategories,
         addedCategories
     });

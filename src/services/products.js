@@ -1,14 +1,14 @@
 import { productUrl } from '../config/serverUrl';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export const getProducts = async () => {
-    return await axios.get(productUrl);
+    return await axiosInstance.get(productUrl);
 };
 
 export const deleteProducts = async (productsId) => {
     console.log('in service deleteProducts');
     console.log(productsId);
-    const response = await axios.delete(`${productUrl}`, {
+    const response = await axiosInstance.delete(`${productUrl}`, {
         data: {
             products_id: productsId
         }

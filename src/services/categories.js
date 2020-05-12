@@ -46,5 +46,5 @@ export const editSubCategoriesToMainCategory = async (subCategoriesInfo) => {
     });
 
     console.log(result);
-    return await getAllCategories(); // TODO only fetch sub categories ?
+    return await getAllCategories(); 
 };

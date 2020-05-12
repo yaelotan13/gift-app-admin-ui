@@ -156,6 +156,8 @@ const ProductPage = (props) => {
             product.removedMainCategories = getRemovedMainCategories();
             product.addedSubCategories = getAddedSubCategories();
             product.removedSubCategories = getRemovedSubCategories();
+            console.log('removed categories:');
+            console.log(product.removedSubCategories);
             dispatch(updateProductInfo(productId, product))
         }
     };

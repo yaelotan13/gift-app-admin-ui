@@ -34,7 +34,8 @@ const Categories = (props) => {
     const [category, setCategory] = useState(null);
     const [selectedMainCategories, setSelectedMainCategories] = useState([]);
     const categoriesState = useSelector(categoriesSlector);
-console.log(categoriesState);
+    
+    console.log(categoriesState);
     useEffect(() => {
         dispatch(fetchAllCategories());
     }, []);
@@ -47,7 +48,10 @@ console.log(categoriesState);
     const handleEdit = (mainCategoryId, subCategories) => {
         const originalSubCategories = categoriesState.subCategories.filter(category => category.main_category_id === mainCategoryId);
         const originalSubCategoriesNames = Array.from(originalSubCategories, category => category.sub_category_name);
+        console.log(originalSubCategoriesNames);
         const removedCategories = originalSubCategoriesNames.filter(category => subCategories.indexOf(category) < 0);
+        console.log(subCategories);
+        console.log(removedCategories);
         const addedCategories = subCategories.filter(category => originalSubCategoriesNames.indexOf(category) < 0);
 
         const payload = {
